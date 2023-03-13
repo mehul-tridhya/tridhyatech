@@ -1,0 +1,33 @@
+<table>
+    <tr>
+        <th><?= __('Name'); ?></th>
+        <th><?= __('Email'); ?></th>
+        <th><?= __('Contact No'); ?></th>
+        <th><?= __('Message'); ?></th>
+        <th><?= __('Created At'); ?></th>
+        <th><?= __('Updated At'); ?></th>
+        <th colspan="2"><?= __('Action'); ?></th>
+    </tr>
+    <tr>
+        <td><a class="action primary" href="<?= $block->getUrl('crud/index/insert'); ?>">Add Record</a></td>
+    </tr>
+    <?php
+        $collectionData = $block->getContactData();
+        foreach($collectionData as $collection):
+    ?>
+    <tr>
+        <td><?= $collection->getName(); ?></td>
+        <td><?= $collection->getEmail(); ?></td>
+        <td><?= $collection->getPhoneNo(); ?></td>
+        <td><?= $collection->getMessage(); ?></td>
+        <td><?= $collection->getCreatedAt(); ?></td>
+        <td><?= $collection->getUpdatedAt(); ?></td>
+        <td>
+            <a href="<?= $block->getUrl('crud/index/insert').'id/'.$collection->getId(); ?>" class="action primary">Edit</a>
+        </td>
+        <td>
+            <a href="<?= $block->getUrl('crud/index/delete').'?id='.$collection->getId(); ?>" class="action primary">Delete</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>

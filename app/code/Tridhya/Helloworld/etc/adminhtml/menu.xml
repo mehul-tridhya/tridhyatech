@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Tridhya_Helloworld::helloworld" title="Hello World" module="Tridhya_Helloworld" sortOrder="51" resource="Tridhya_Helloworld::helloworld"/>
+        <add id="Tridhya_Helloworld::post" title="Manage Posts" module="Tridhya_Helloworld" sortOrder="10" action="tridhya_helloworld/index" resource="Tridhya_Helloworld::post" parent="Tridhya_Helloworld::helloworld"/>
+        <add id="Tridhya_Helloworld::hello_configuration" title="Configuration" module="Tridhya_Helloworld" sortOrder="99" parent="Tridhya_Helloworld::helloworld" action="adminhtml/system_config/edit/section/helloworld" resource="Tridhya_Helloworld::helloworld_configuration"/>
+    </menu>
+</config>

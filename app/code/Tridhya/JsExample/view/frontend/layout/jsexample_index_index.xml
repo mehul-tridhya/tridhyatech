@@ -1,0 +1,15 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="1column">
+    <head>
+        <!-- <script src="Tridhya_JsExample::js/custom_js.js" /> -->
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Tridhya\JsExample\Block\Index" name="jsexample_index" template="index.phtml">
+                <arguments>
+                    <argument name="current_page" xsi:type="string">detail</argument>
+                    <argument name="all_page" xsi:type="string">all</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="tridhya_blog" resource="default" engine="innodb" comment="Tridhya Blog Table">
+        <column xsi:type="int" name="blog_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Blog ID" />
+        <column xsi:type="text" name="blog_title" nullable="false" comment="Blog Title" />
+        <column xsi:type="text" name="blog_description" nullable="true" comment="Blog Description" />
+        <column xsi:type="smallint" name="status" nullable="false" comment="Status" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="blog_id" />
+        </constraint>
+    </table>
+</schema>

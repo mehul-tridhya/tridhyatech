@@ -1,0 +1,40 @@
+<?php $productCollection = $block->getFeaturedProductsCollection(); ?>
+<?php $abstractProductBlock = $block->getAbstractProductClass(); ?>
+<?php
+const PARAM_NAME_BASE64_URL = 'r64';
+const PARAM_NAME_URL_ENCODED = 'uenc';
+
+use Magento\Framework\App\Action\Action;
+?>
+<section class="regular slider">
+    <?php foreach ($productCollection as $product) : ?>
+        <div>
+            <img src="<?php echo $block->getImageUrl($product); ?>" alt="<?php echo $product->getName(); ?>" />
+            <strong class="product name product-item-name">
+                <a class="product-item-link" href="<?php echo $product->getProductUrl(); ?>">
+                    <?php echo $product->getName(); ?>
+                </a>
+            </strong>
+            <div class="price-box price-final_price" data-role="priceBox" data-product-id="430" data-price-box="product-id-430">
+                <span class="normal-price">
+                    <span class="price-final_price tax weee">
+                        <span class="price-label">As low as</span>
+                        <span id="product-price-430" data-price-amount="45" data-price-type="finalPrice" class="price-wrapper ">
+                            <span class="price"><?php echo $block->getProductPrice($product); ?></span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+            <?php $postParams = $block->getAddToCartPostParams($product); ?>
+            <form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post">
+                <input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
+                <input type="hidden" name="<?php echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+                <?php echo $block->getBlockHtml('formkey') ?>
+                <?php $storeManager = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Store\Model\StoreManagerInterface'); ?>
+                <button type="submit" class="action tocart primary">
+                    <span><?php echo __('Add to Cart') ?></span>
+                </button>
+            </form>
+        </div>
+    <?php endforeach; ?>
+</section>
