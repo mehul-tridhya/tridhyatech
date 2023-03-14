@@ -95,16 +95,6 @@ class NewProducts implements ArgumentInterface
         return $collection;
     }
 
-    public function getEndOfDayDate()
-    {
-        return ;
-    }
-
-    public function getStartOfDayDate()
-    {
-        return ;
-    }
-
     public function getProductPrice($product)
     {
         $abstractProductBlock = $this->layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');

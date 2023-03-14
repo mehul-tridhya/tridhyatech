@@ -3,6 +3,7 @@
 namespace Tridhyatech\Mehul\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use \Magento\Store\Model\StoreManagerInterface as StoreManagerInterface;
 
 class FeaturedProducts implements ArgumentInterface
 {
@@ -16,6 +17,7 @@ class FeaturedProducts implements ArgumentInterface
     protected $helperData;
     protected $layout;
     protected $scopeConfig;
+    protected $storeManagerInterface;
 
     const XML_PATH_HEADER = 'tridhyatech_general/tridhyatech_feature/heading_text';
     const XML_PATH_ENABLE = 'tridhyatech_general/tridhyatech_feature/enable';
@@ -35,7 +37,8 @@ class FeaturedProducts implements ArgumentInterface
         \Magento\Wishlist\Helper\Data $wishlistHelper,
         \Tridhya\HelloWorld\Helper\Data $helperData,
         \Magento\Framework\View\Layout $layout,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManagerInterface,
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->categoryFactory = $categoryFactory;
@@ -47,6 +50,12 @@ class FeaturedProducts implements ArgumentInterface
         $this->helperData = $helperData;
         $this->layout = $layout;
         $this->scopeConfig = $scopeConfig;
+        $this->storeManagerInterface = $storeManagerInterface;
+    }
+
+    public function getStoreId()
+    {
+        return $this->storeManagerInterface->getStore()->getId();
     }
 
     public function getImageUrl($product)
@@ -65,6 +74,7 @@ class FeaturedProducts implements ArgumentInterface
         $collection = $this->productCollectionFactory->create();
         $collection->addAttributeToFilter('status', ['in' => $this->productStatus->getVisibleStatusIds()]);
         $collection->addAttributeToFilter('visibility', \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH);
+        $collection->setStoreId($this->getStoreId());
         // $collection->setVisibility($this->productVisibility->getVisibleInSiteIds());
         $collection->addAttributeToSelect('*');
         $collection->addAttributeToFilter('is_featured', 1);
