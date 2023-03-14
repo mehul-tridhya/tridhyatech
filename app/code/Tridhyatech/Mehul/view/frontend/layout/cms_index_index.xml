@@ -26,6 +26,11 @@
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\MostView</argument>
                 </arguments>
             </block>
+            <block class="Tridhyatech\Mehul\Block\RecentOrdered" name="recentordered" template="recentordered.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\RecentOrdered</argument>
+                </arguments>
+            </block>
         </referenceBlock>
     </body>
 </page>
