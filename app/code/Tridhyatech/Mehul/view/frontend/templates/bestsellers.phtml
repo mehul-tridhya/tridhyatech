@@ -2,11 +2,11 @@
 $viewModel = $block->getData('view_model');
 ?>
 <?php if ($viewModel->getIsBlockEnable()) : ?>
-    <?php $productCollection = $viewModel->getFeaturedProductsCollection(); ?>
+    <?php $productCollection = $viewModel->getBestsellersProductsCollection(); ?>
     <div class="content-heading">
         <h2 class="title"><?php echo $viewModel->getHeaderText(); ?></h2>
     </div>
-    <section class="feature-product slider">
+    <section class="bestsellers-product slider">
         <?php foreach ($productCollection as $product) : ?>
             <div>
                 <img src="<?php echo $viewModel->getImageUrl($product); ?>" alt="<?php echo $product->getName(); ?>" />
@@ -48,8 +48,8 @@ $viewModel = $block->getData('view_model');
     </section>
 <?php endif; ?>
 <script>
-    var featureProduct = new Object();
-    featureProduct["numberOfProduct"] = "<?php echo $viewModel->getNumberOfProductConfig(); ?>";
-    featureProduct["producPerSilde"] = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    window.featureProduct = featureProduct;
+    var bestsellersProduct = new Object();
+    bestsellersProduct["numberOfProduct"] = "<?php echo $viewModel->getNumberOfProductConfig(); ?>";
+    bestsellersProduct["producPerSilde"] = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
+    window.bestsellersProduct = bestsellersProduct;
 </script>

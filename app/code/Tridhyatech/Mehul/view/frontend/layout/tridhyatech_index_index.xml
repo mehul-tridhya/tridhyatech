@@ -4,7 +4,11 @@
     </head>
     <body>
         <referenceBlock name="content">
-            <block class="Tridhyatech\Mehul\Block\FeaturedProducts" name="proslider" template="featuredproducts.phtml" />
+            <block class="Tridhyatech\Mehul\Block\FeaturedProducts" name="proslider" template="featuredproducts.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\FeaturedProducts</argument>
+                </arguments>
+            </block>
         </referenceBlock>
     </body>
 </page>

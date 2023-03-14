@@ -2,10 +2,25 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <script src="Tridhyatech_Mehul::js/common.js" async="async" />
+        <!-- <script src="Tridhyatech_Mehul::js/common.js" /> -->
     </head>
     <body>
         <referenceBlock name="content">
-            <block class="Tridhyatech\Mehul\Block\FeaturedProducts" name="proslider" template="featuredproducts.phtml" />
+            <block class="Tridhyatech\Mehul\Block\FeaturedProducts" name="featuredproducts" template="featuredproducts.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\FeaturedProducts</argument>
+                </arguments>
+            </block>
+            <block class="Tridhyatech\Mehul\Block\NewProducts" name="newproducts" template="newproducts.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\NewProducts</argument>
+                </arguments>
+            </block>
+            <block class="Tridhyatech\Mehul\Block\Bestsellers" name="bestsellers" template="bestsellers.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\Bestsellers</argument>
+                </arguments>
+            </block>
         </referenceBlock>
     </body>
 </page>
