@@ -103,7 +103,7 @@ class Bestsellers implements ArgumentInterface
     public function getProductPrice($product)
     {
         $abstractProductBlock = $this->layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
-        return $abstractProductBlock->getProductPrice($product);
+        return $abstractProductBlock->getProductPriceHtml($product,\Magento\Catalog\Ui\DataProvider\Product\Listing\Collector\Price::KEY_FINAL_PRICE);
     }
 
     public function getAddToCartPostParams($product)

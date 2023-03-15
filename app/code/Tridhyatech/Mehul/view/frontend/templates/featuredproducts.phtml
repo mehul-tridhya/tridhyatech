@@ -18,8 +18,7 @@ $viewModel = $block->getData('view_model');
                 <div class="price-box price-final_price" data-role="priceBox" data-product-id="430" data-price-box="product-id-430">
                     <span class="normal-price">
                         <span class="price-final_price tax weee">
-                            <span class="price-label">As low as</span>
-                            <span id="product-price-430" data-price-amount="45" data-price-type="finalPrice" class="price-wrapper ">
+                            <span id="product-price-<?php echo $product->getId(); ?>" data-price-amount="45" data-price-type="finalPrice" class="price-wrapper ">
                                 <span class="price"><?php echo $viewModel->getProductPrice($product); ?></span>
                             </span>
                         </span>

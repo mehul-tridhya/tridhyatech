@@ -16,7 +16,7 @@
         <item name="spinner" xsi:type="string">uiexample_blog_columns</item>
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
-                <item name="name" xsi:type="string">add</item>
+                <item name="name" xsi:type="string">add123</item>
                 <item name="label" xsi:type="string" translate="true">Add New</item>
                 <item name="class" xsi:type="string">primary</item>
                 <item name="url" xsi:type="string">*/*/add</item>
@@ -255,7 +255,7 @@
         <actionsColumn name="actions" class="Tridhya\UiExample\Ui\Component\Listing\Column\BlogActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeEnabled" xsi:type="boolean">true</item>
                     <item name="resizeDefaultWidth" xsi:type="string">107</item>
                     <item name="indexField" xsi:type="string">blog_id</item>
                     <item name="sortOrder" xsi:type="number">180</item>

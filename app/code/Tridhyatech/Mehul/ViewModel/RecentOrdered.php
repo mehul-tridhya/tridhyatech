@@ -81,7 +81,6 @@ class RecentOrdered implements ArgumentInterface
                 }
             }
         }
-        $productIds = array_unique($productIds);
         $productCollection = $this->productCollectionFactory->create();
         $productCollection->addAttributeToSelect('*');
         $productCollection->setStoreId($this->getStoreId());
@@ -103,7 +102,7 @@ class RecentOrdered implements ArgumentInterface
     public function getProductPrice($product)
     {
         $abstractProductBlock = $this->layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
-        return $abstractProductBlock->getProductPrice($product);
+        return $abstractProductBlock->getProductPriceHtml($product,\Magento\Catalog\Ui\DataProvider\Product\Listing\Collector\Price::KEY_FINAL_PRICE);
     }
 
     public function getAddToCartPostParams($product)
