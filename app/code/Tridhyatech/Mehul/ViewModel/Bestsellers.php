@@ -10,6 +10,8 @@ use Magento\Framework\View\Layout;
 use \Magento\Wishlist\Helper\Data as WishlistHelper;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
 use \Magento\Catalog\Model\Product\Attribute\Source\Status as ProductStatus;
+use \Magento\Catalog\Model\ProductRepository as ProductRepository;
+use \Magento\ConfigurableProduct\Model\Product\Type\Configurable as Configurable;
 
 class Bestsellers implements ArgumentInterface
 {
@@ -20,6 +22,8 @@ class Bestsellers implements ArgumentInterface
     protected $wishlistHelper;
     protected $scopeConfig;
     protected $productStatus;
+    protected $_productRepository;
+    protected $configurable;
 
     const XML_PATH_HEADER = 'tridhyatech_general/tridhyatech_bestsellers/heading_text';
     const XML_PATH_ENABLE = 'tridhyatech_general/tridhyatech_bestsellers/enable';
@@ -37,6 +41,8 @@ class Bestsellers implements ArgumentInterface
         WishlistHelper $wishlistHelper,
         ScopeConfigInterface $scopeConfig,
         ProductStatus $productStatus,
+        ProductRepository $productRepository,
+        Configurable $configurable,
     ) {
         $this->_bestSellersCollectionFactory = $bestSellersCollectionFactory;
         $this->productCollectionFactory = $productCollectionFactory;
@@ -45,6 +51,8 @@ class Bestsellers implements ArgumentInterface
         $this->wishlistHelper = $wishlistHelper;
         $this->scopeConfig = $scopeConfig;
         $this->productStatus = $productStatus;
+        $this->_productRepository = $productRepository;
+        $this->configurable = $configurable;
     }
 
     public function getImageUrl($product)
@@ -58,13 +66,28 @@ class Bestsellers implements ArgumentInterface
         return $imageUrl;
     }
 
+    public function getParentProductId($childProductId)
+    {
+        $parentConfigObject = $this->configurable->getParentIdsByChild($childProductId);
+        if ($parentConfigObject) {
+            return $parentConfigObject[0];
+        }
+        return false;
+    }
+
     public function getBestsellersProductsCollection()
     {
         $productIds = [];
         $bestSellers = $this->_bestSellersCollectionFactory->create()
             ->setPeriod('day');
         foreach ($bestSellers as $product) {
-            $productIds[] = $product->getProductId();
+            $parentProductId = $this->getParentProductId($product->getProductId());
+            if($parentProductId)
+            {
+                $productIds[] = $parentProductId;
+            }else{
+                $productIds[] = $product->getProductId();
+            }
         }
         $collection = $this->productCollectionFactory->create()->addIdFilter($productIds);
         $collection->addAttributeToFilter('status', ['in' => $this->productStatus->getVisibleStatusIds()]);
