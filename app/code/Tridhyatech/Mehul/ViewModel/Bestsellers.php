@@ -62,7 +62,7 @@ class Bestsellers implements ArgumentInterface
     {
         $productIds = [];
         $bestSellers = $this->_bestSellersCollectionFactory->create()
-            ->setPeriod('month');
+            ->setPeriod('day');
         foreach ($bestSellers as $product) {
             $productIds[] = $product->getProductId();
         }

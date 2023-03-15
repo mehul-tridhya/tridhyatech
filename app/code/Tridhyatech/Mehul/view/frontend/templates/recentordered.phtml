@@ -1,7 +1,7 @@
 <?php
 $viewModel = $block->getData('view_model');
 ?>
-<?php if ($viewModel->getIsBlockEnable()) : ?>
+<?php if ($viewModel->getIsBlockEnable() && $viewModel->getCustomerData()) : ?>
     <?php $productCollection = $viewModel->getRecentOrderedProductsCollection(); ?>
     <div class="content-heading">
         <h2 class="title"><?php echo $viewModel->getHeaderText(); ?></h2>

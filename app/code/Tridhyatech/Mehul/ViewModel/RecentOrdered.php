@@ -60,6 +60,11 @@ class RecentOrdered implements ArgumentInterface
         return $this->storeManagerInterface->getStore()->getId();
     }
 
+    public function getCustomerData()
+    {
+        return $this->_customerSession->getCustomerdata() ? $this->_customerSession->getCustomerdata() : null ;
+    }
+
     public function getRecentOrderedProductsCollection()
     {
         $productIds = [];
