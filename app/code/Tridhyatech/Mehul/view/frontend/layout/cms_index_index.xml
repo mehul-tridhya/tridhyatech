@@ -1,32 +1,34 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <script src="Tridhyatech_Mehul::js/common.js" async="async" />
+        <!-- <script src="Tridhyatech_Mehul::js/common.js" async="async" /> -->
         <!-- <script src="Tridhyatech_Mehul::js/common.js" /> -->
     </head>
     <body>
         <referenceBlock name="content">
-            <block class="Tridhyatech\Mehul\Block\FeaturedProducts" name="featuredproducts" template="featuredproducts.phtml">
-                <arguments>
-                    <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\FeaturedProducts</argument>
-                </arguments>
-            </block>
-            <block class="Tridhyatech\Mehul\Block\NewProducts" name="newproducts" template="newproducts.phtml">
+            <container name="some.container" as="someContainer" label="Some Container" htmlTag="div" htmlClass="some-container">
+                <block name="featuredproducts" template="Tridhyatech_Mehul::featuredproducts.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\FeaturedProducts</argument>
+                    </arguments>
+                </block>
+            </container>
+            <block name="newproducts" template="Tridhyatech_Mehul::newproducts.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\NewProducts</argument>
                 </arguments>
             </block>
-            <block class="Tridhyatech\Mehul\Block\Bestsellers" name="bestsellers" template="bestsellers.phtml">
+            <block name="bestsellers" template="Tridhyatech_Mehul::bestsellers.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\Bestsellers</argument>
                 </arguments>
             </block>
-            <block class="Tridhyatech\Mehul\Block\MostView" name="mostview" template="mostview.phtml">
+            <block name="mostview" template="Tridhyatech_Mehul::mostview.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\MostView</argument>
                 </arguments>
             </block>
-            <block class="Tridhyatech\Mehul\Block\RecentOrdered" name="recentordered" template="recentordered.phtml">
+            <block name="recentordered" template="Tridhyatech_Mehul::recentordered.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\RecentOrdered</argument>
                 </arguments>

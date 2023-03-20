@@ -3,34 +3,34 @@
 namespace Tridhyatech\Mehul\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use \Magento\Sales\Model\ResourceModel\Order\CollectionFactory as orderCollectionFactory;
-use \Magento\Store\Model\StoreManagerInterface as StoreManagerInterface;
-use \Magento\Framework\App\Config\ScopeConfigInterface;
-use \Magento\Wishlist\Helper\Data as WishlistHelper;
-use \Magento\Catalog\Block\Product\ListProduct;
-use \Magento\Framework\View\Layout;
-use \Magento\Customer\Model\Session as CustomerSession;
-use \Magento\Catalog\Model\Product\Attribute\Source\Status as ProductStatus;
-use \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory as orderCollectionFactory;
+use Magento\Store\Model\StoreManagerInterface as StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Wishlist\Helper\Data as WishlistHelper;
+use Magento\Catalog\Block\Product\ListProduct;
+use Magento\Framework\View\Layout;
+use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Catalog\Model\Product\Attribute\Source\Status as ProductStatus;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 
 class RecentOrdered implements ArgumentInterface
 {
     protected $_orderCollectionFactory;
-    protected $storeManagerInterface;
-    protected $scopeConfig;
-    protected $wishlistHelper;
-    protected $listProductBlock;
-    protected $layout;
+    protected $_storeManagerInterface;
+    protected $_scopeConfig;
+    protected $_wishlistHelper;
+    protected $_listProductBlock;
+    protected $_layout;
     protected $_customerSession;
-    protected $productStatus;
-    protected $productCollectionFactory;
+    protected $_productStatus;
+    protected $_productCollectionFactory;
 
-    const XML_PATH_HEADER = 'tridhyatech_general/tridhyatech_recentordered/heading_text';
-    const XML_PATH_ENABLE = 'tridhyatech_general/tridhyatech_recentordered/enable';
-    const XML_PATH_ADDTOCART = 'tridhyatech_general/tridhyatech_recentordered/add_to_cart';
-    const XML_PATH_ADDTOWISHLIST = 'tridhyatech_general/tridhyatech_recentordered/add_to_wishlist';
-    const XML_PATH_NUMBER_OF_PRODUCT = 'tridhyatech_general/tridhyatech_recentordered/number_of_product';
-    const XML_PATH_PRODUCT_PER_SLIDE = 'tridhyatech_general/tridhyatech_recentordered/product_per_silde';
+    const XML_PATH_HEADER = 'slider/recentordered/heading_text';
+    const XML_PATH_ENABLE = 'slider/recentordered/enable';
+    const XML_PATH_ADDTOCART = 'slider/recentordered/add_to_cart';
+    const XML_PATH_ADDTOWISHLIST = 'slider/recentordered/add_to_wishlist';
+    const XML_PATH_NUMBER_OF_PRODUCT = 'slider/recentordered/number_of_product';
+    const XML_PATH_PRODUCT_PER_SLIDE = 'slider/recentordered/product_per_silde';
     const SCOPE_STORE = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 
     public function __construct(
@@ -44,20 +44,20 @@ class RecentOrdered implements ArgumentInterface
         ProductStatus $productStatus,
         ProductCollectionFactory $productCollectionFactory,
     ) {
-        $this->storeManagerInterface = $storeManagerInterface;
-        $this->scopeConfig = $scopeConfig;
-        $this->wishlistHelper = $wishlistHelper;
-        $this->listProductBlock = $listProductBlock;
-        $this->layout = $layout;
+        $this->_storeManagerInterface = $storeManagerInterface;
+        $this->_scopeConfig = $scopeConfig;
+        $this->_wishlistHelper = $wishlistHelper;
+        $this->_listProductBlock = $listProductBlock;
+        $this->_layout = $layout;
         $this->_orderCollectionFactory = $orderCollectionFactory;
         $this->_customerSession = $customerSession;
-        $this->productStatus = $productStatus;
-        $this->productCollectionFactory = $productCollectionFactory;
+        $this->_productStatus = $productStatus;
+        $this->_productCollectionFactory = $productCollectionFactory;
     }
 
     public function getStoreId()
     {
-        return $this->storeManagerInterface->getStore()->getId();
+        return $this->_storeManagerInterface->getStore()->getId();
     }
 
     public function getCustomerData()
@@ -81,7 +81,7 @@ class RecentOrdered implements ArgumentInterface
                 }
             }
         }
-        $productCollection = $this->productCollectionFactory->create();
+        $productCollection = $this->_productCollectionFactory->create();
         $productCollection->addAttributeToSelect('*');
         $productCollection->setStoreId($this->getStoreId());
         $productCollection->addFieldToFilter('entity_id', array('in' => $productIds));
@@ -101,47 +101,47 @@ class RecentOrdered implements ArgumentInterface
 
     public function getProductPrice($product)
     {
-        $abstractProductBlock = $this->layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+        $abstractProductBlock = $this->_layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
         return $abstractProductBlock->getProductPriceHtml($product,\Magento\Catalog\Ui\DataProvider\Product\Listing\Collector\Price::KEY_FINAL_PRICE);
     }
 
     public function getAddToCartPostParams($product)
     {
-        return $this->listProductBlock->getAddToCartPostParams($product);
+        return $this->_listProductBlock->getAddToCartPostParams($product);
     }
 
     public function getAddToWishlistParams($product)
     {
-        return $this->wishlistHelper->getAddParams($product);
+        return $this->_wishlistHelper->getAddParams($product);
     }
 
     public function getHeaderText()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_HEADER, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_HEADER, self::SCOPE_STORE);
     }
 
     public function getIsBlockEnable()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ENABLE, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_ENABLE, self::SCOPE_STORE);
     }
 
     public function getIsAddtoCartEnable()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ADDTOCART, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_ADDTOCART, self::SCOPE_STORE);
     }
 
     public function getIsAddtoWishlistEnable()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ADDTOWISHLIST, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_ADDTOWISHLIST, self::SCOPE_STORE);
     }
 
     public function getNumberOfProductConfig()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_NUMBER_OF_PRODUCT, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_NUMBER_OF_PRODUCT, self::SCOPE_STORE);
     }
 
     public function getProductPerSildeConfig()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_PRODUCT_PER_SLIDE, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_PRODUCT_PER_SLIDE, self::SCOPE_STORE);
     }
 }

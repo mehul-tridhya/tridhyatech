@@ -47,8 +47,42 @@ $viewModel = $block->getData('view_model');
     </section>
 <?php endif; ?>
 <script>
-    var bestsellersProduct = new Object();
-    bestsellersProduct["numberOfProduct"] = "<?php echo $viewModel->getNumberOfProductConfig(); ?>";
-    bestsellersProduct["producPerSilde"] = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    window.bestsellersProduct = bestsellersProduct;
+    var producPerSildeForBestSellers = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
+    console.log(producPerSildeForBestSellers);
+    require(['jquery', 'domReady', 'jquery/ui', 'slick'], function($, domReady) {
+        domReady(function() {
+            $(".bestsellers-product").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: producPerSildeForBestSellers,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                responsive: [{
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 750,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        });
+    });
 </script>

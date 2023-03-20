@@ -47,8 +47,42 @@ $viewModel = $block->getData('view_model');
     </section>
 <?php endif; ?>
 <script>
-    var newproducts = new Object();
-    newproducts["numberOfProduct"] = "<?php echo $viewModel->getNumberOfProductConfig(); ?>";
-    newproducts["producPerSilde"] = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    window.newproducts = newproducts;
+    var producPerSildeForNew = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
+    console.log(producPerSildeForNew);
+    require(['jquery', 'domReady', 'jquery/ui', 'slick'], function($, domReady) {
+        domReady(function() {
+            $(".new-product").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: producPerSildeForNew,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                responsive: [{
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 750,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        });
+    });
 </script>

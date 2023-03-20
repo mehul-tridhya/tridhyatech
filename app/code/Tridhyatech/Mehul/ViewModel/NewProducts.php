@@ -3,50 +3,59 @@
 namespace Tridhyatech\Mehul\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as productCollectionFactory;
+use Magento\Catalog\Model\CategoryFactory as categoryFactory;
+use Magento\Catalog\Model\Product\Attribute\Source\Status as productStatus;
+use Magento\Catalog\Model\Product\Visibility as productVisibility;
+use Magento\Catalog\Block\Product\ListProduct as listProductBlock;
+use Magento\Customer\Model\Session as customerSession;
+use Magento\Wishlist\Helper\Data as wishlistHelper;
+use Tridhya\HelloWorld\Helper\Data as helperData;
+use Magento\Framework\View\Layout as layout;
+use Magento\Framework\App\Config\ScopeConfigInterface as scopeConfig;
 class NewProducts implements ArgumentInterface
 {
-    protected $productCollectionFactory;
-    protected $categoryFactory;
-    protected $productVisibility;
-    protected $productStatus;
+    protected $_productCollectionFactory;
+    protected $_categoryFactory;
+    protected $_productVisibility;
+    protected $_productStatus;
     protected $_customerSession;
-    protected $listProductBlock;
-    protected $wishlistHelper;
-    protected $helperData;
-    protected $layout;
-    protected $scopeConfig;
+    protected $_listProductBlock;
+    protected $_wishlistHelper;
+    protected $_helperData;
+    protected $_layout;
+    protected $_scopeConfig;
 
-    const XML_PATH_HEADER = 'tridhyatech_general/tridhyatech_new/heading_text';
-    const XML_PATH_ENABLE = 'tridhyatech_general/tridhyatech_new/enable';
-    const XML_PATH_ADDTOCART = 'tridhyatech_general/tridhyatech_new/add_to_cart';
-    const XML_PATH_ADDTOWISHLIST = 'tridhyatech_general/tridhyatech_new/add_to_wishlist';
-    const XML_PATH_NUMBER_OF_PRODUCT = 'tridhyatech_general/tridhyatech_new/number_of_product';
-    const XML_PATH_PRODUCT_PER_SLIDE = 'tridhyatech_general/tridhyatech_new/product_per_silde';
+    const XML_PATH_HEADER = 'slider/new/heading_text';
+    const XML_PATH_ENABLE = 'slider/new/enable';
+    const XML_PATH_ADDTOCART = 'slider/new/add_to_cart';
+    const XML_PATH_ADDTOWISHLIST = 'slider/new/add_to_wishlist';
+    const XML_PATH_NUMBER_OF_PRODUCT = 'slider/new/number_of_product';
+    const XML_PATH_PRODUCT_PER_SLIDE = 'slider/new/product_per_silde';
     const SCOPE_STORE = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 
     public function __construct(
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Catalog\Model\CategoryFactory $categoryFactory,
-        \Magento\Catalog\Model\Product\Attribute\Source\Status $productStatus,
-        \Magento\Catalog\Model\Product\Visibility $productVisibility,
-        \Magento\Catalog\Block\Product\ListProduct $listProductBlock,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Wishlist\Helper\Data $wishlistHelper,
-        \Tridhya\HelloWorld\Helper\Data $helperData,
-        \Magento\Framework\View\Layout $layout,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        productCollectionFactory $productCollectionFactory,
+        categoryFactory $categoryFactory,
+        productStatus $productStatus,
+        productVisibility $productVisibility,
+        listProductBlock $listProductBlock,
+        customerSession $customerSession,
+        wishlistHelper $wishlistHelper,
+        helperData $helperData,
+        layout $layout,
+        scopeConfig $scopeConfig
     ) {
-        $this->productCollectionFactory = $productCollectionFactory;
-        $this->categoryFactory = $categoryFactory;
-        $this->productStatus = $productStatus;
-        $this->productVisibility = $productVisibility;
-        $this->listProductBlock = $listProductBlock;
+        $this->_productCollectionFactory = $productCollectionFactory;
+        $this->_categoryFactory = $categoryFactory;
+        $this->_productStatus = $productStatus;
+        $this->_productVisibility = $productVisibility;
+        $this->_listProductBlock = $listProductBlock;
         $this->_customerSession = $customerSession;
-        $this->wishlistHelper = $wishlistHelper;
-        $this->helperData = $helperData;
-        $this->layout = $layout;
-        $this->scopeConfig = $scopeConfig;
+        $this->_wishlistHelper = $wishlistHelper;
+        $this->_helperData = $helperData;
+        $this->_layout = $layout;
+        $this->_scopeConfig = $scopeConfig;
     }
 
     public function getImageUrl($product)
@@ -63,9 +72,9 @@ class NewProducts implements ArgumentInterface
     public function getNewProductsCollection()
     {
         $todayDate = date('Y-m-d');
-        $collection = $this->productCollectionFactory->create();
-        $collection->addAttributeToFilter('status', ['in' => $this->productStatus->getVisibleStatusIds()]);
-        $collection->setVisibility($this->productVisibility->getVisibleInSiteIds());
+        $collection = $this->_productCollectionFactory->create();
+        $collection->addAttributeToFilter('status', ['in' => $this->_productStatus->getVisibleStatusIds()]);
+        $collection->setVisibility($this->_productVisibility->getVisibleInSiteIds());
         $collection->addAttributeToSelect('*');
         $collection ->addAttributeToFilter(
                 'news_from_date',
@@ -97,47 +106,47 @@ class NewProducts implements ArgumentInterface
 
     public function getProductPrice($product)
     {
-        $abstractProductBlock = $this->layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+        $abstractProductBlock = $this->_layout->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
         return $abstractProductBlock->getProductPriceHtml($product,\Magento\Catalog\Ui\DataProvider\Product\Listing\Collector\Price::KEY_FINAL_PRICE);
     }
 
     public function getAddToCartPostParams($product)
     {
-        return $this->listProductBlock->getAddToCartPostParams($product);
+        return $this->_listProductBlock->getAddToCartPostParams($product);
     }
 
     public function getAddToWishlistParams($product)
     {
-        return $this->wishlistHelper->getAddParams($product);
+        return $this->_wishlistHelper->getAddParams($product);
     }
 
     public function getHeaderText()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_HEADER, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_HEADER, self::SCOPE_STORE);
     }
 
     public function getIsBlockEnable()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ENABLE, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_ENABLE, self::SCOPE_STORE);
     }
 
     public function getIsAddtoCartEnable()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ADDTOCART, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_ADDTOCART, self::SCOPE_STORE);
     }
 
     public function getIsAddtoWishlistEnable()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_ADDTOWISHLIST, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_ADDTOWISHLIST, self::SCOPE_STORE);
     }
 
     public function getNumberOfProductConfig()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_NUMBER_OF_PRODUCT, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_NUMBER_OF_PRODUCT, self::SCOPE_STORE);
     }
 
     public function getProductPerSildeConfig()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_PRODUCT_PER_SLIDE, self::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::XML_PATH_PRODUCT_PER_SLIDE, self::SCOPE_STORE);
     }
 }

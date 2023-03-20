@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <tridhyatech_general>
-            <tridhyatech_feature>
+        <slider>
+            <feature>
                 <enable>1</enable>
                 <heading_text>Featured Product</heading_text>
                 <number_of_product>10</number_of_product>
                 <product_per_silde>5</product_per_silde>
                 <add_to_cart>1</add_to_cart>
                 <add_to_wishlist>1</add_to_wishlist>
-            </tridhyatech_feature>
-            <tridhyatech_new>
+            </feature>
+            <new>
                 <enable>1</enable>
                 <heading_text>New Product</heading_text>
                 <number_of_product>10</number_of_product>
                 <product_per_silde>5</product_per_silde>
                 <add_to_cart>1</add_to_cart>
                 <add_to_wishlist>1</add_to_wishlist>
-            </tridhyatech_new>
-            <tridhyatech_bestsellers>
+            </new>
+            <bestsellers>
                 <enable>1</enable>
                 <heading_text>Bestsellers Products</heading_text>
                 <number_of_product>10</number_of_product>
                 <product_per_silde>5</product_per_silde>
                 <add_to_cart>1</add_to_cart>
                 <add_to_wishlist>1</add_to_wishlist>
-            </tridhyatech_bestsellers>
-            <tridhyatech_mostview>
+            </bestsellers>
+            <mostview>
                 <enable>1</enable>
                 <heading_text>Most View Product</heading_text>
                 <number_of_product>10</number_of_product>
                 <product_per_silde>5</product_per_silde>
                 <add_to_cart>1</add_to_cart>
                 <add_to_wishlist>1</add_to_wishlist>
-            </tridhyatech_mostview>
-            <tridhyatech_recentordered>
+            </mostview>
+            <recentordered>
                 <enable>1</enable>
                 <heading_text>Recent Ordered Products</heading_text>
                 <number_of_product>10</number_of_product>
                 <product_per_silde>5</product_per_silde>
                 <add_to_cart>1</add_to_cart>
                 <add_to_wishlist>1</add_to_wishlist>
-            </tridhyatech_recentordered>
-        </tridhyatech_general>
+            </recentordered>
+        </slider>
     </default>
 </config>
