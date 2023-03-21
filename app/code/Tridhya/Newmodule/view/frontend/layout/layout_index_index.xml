@@ -1,0 +1,38 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="3columns">
+    <body>
+        <referenceContainer name="sidebar.main">
+            <container name="left.container" as="leftContainer" label="Left Container" htmlTag="div" htmlClass="left-container">
+                <block class="Tridhya\Newmodule\Block\Frontend\Index" name="layout.index1" template="Tridhya_Newmodule::sidebar_main.phtml">
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">sidebar-main-div</argument>
+                        <argument name="add_base_attribute" xsi:type="string">itemprop="name"</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <container name="main.container" as="mainContainer" htmlTag="div" htmlClass="main-container">
+                <block class="Tridhya\Newmodule\Block\Frontend\Index" name="layout.index2" template="Tridhya_Newmodule::maincontent.phtml"></block>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content.bottom">
+            <block class="Magento\Cms\Block\Block" name="block_identifier">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">custom_text</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceBlock name="page.main.title">
+            <arguments>
+                <argument name="css_class" xsi:type="string">my-new-block-class</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="sidebar.additional">
+            <referenceBlock name="catalog.compare.sidebar" remove="true" />
+            <referenceBlock name="wishlist_sidebar" remove="true" />
+            <container name="right.container" as="rightContainer" label="Right Container" htmlTag="div" htmlClass="right-container">
+                <block class="Tridhya\Newmodule\Block\Frontend\Index" name="layout.index3" template="Tridhya_Newmodule::sidebar_add.phtml"></block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

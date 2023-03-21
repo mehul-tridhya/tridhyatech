@@ -1,51 +1,49 @@
 <?php
 $viewModel = $block->getData('view_model');
 ?>
-<?php if ($viewModel->getIsBlockEnable()) : ?>
-    <?php $productCollection = $viewModel->getBestsellersProductsCollection(); ?>
-    <div class="content-heading">
-        <h2 class="title"><?php echo $viewModel->getHeaderText(); ?></h2>
-    </div>
-    <section class="bestsellers-product slider">
-        <?php foreach ($productCollection as $product) : ?>
-            <div>
-                <img src="<?php echo $viewModel->getImageUrl($product); ?>" alt="<?php echo $product->getName(); ?>" />
-                <strong class="product name product-item-name">
-                    <a class="product-item-link" href="<?php echo $product->getProductUrl(); ?>">
-                        <?php echo $product->getName(); ?>
-                    </a>
-                </strong>
-                <div class="price-box price-final_price" data-role="priceBox" data-product-id="430" data-price-box="product-id-430">
-                    <span class="normal-price">
-                        <span class="price-final_price tax weee">
-                            <span id="product-price-<?php echo $product->getId(); ?>" data-price-amount="45" data-price-type="finalPrice" class="price-wrapper ">
-                                <span class="price"><?php echo $viewModel->getProductPrice($product); ?></span>
-                            </span>
+<?php $productCollection = $viewModel->getBestsellersProductsCollection(); ?>
+<div class="content-heading">
+    <h2 class="title"><?php echo $viewModel->getHeaderText(); ?></h2>
+</div>
+<section class="bestsellers-product slider">
+    <?php foreach ($productCollection as $product) : ?>
+        <div>
+            <img src="<?php echo $viewModel->getImageUrl($product); ?>" alt="<?php echo $product->getName(); ?>" />
+            <strong class="product name product-item-name">
+                <a class="product-item-link" href="<?php echo $product->getProductUrl(); ?>">
+                    <?php echo $product->getName(); ?>
+                </a>
+            </strong>
+            <div class="price-box price-final_price" data-role="priceBox" data-product-id="430" data-price-box="product-id-430">
+                <span class="normal-price">
+                    <span class="price-final_price tax weee">
+                        <span id="product-price-<?php echo $product->getId(); ?>" data-price-amount="45" data-price-type="finalPrice" class="price-wrapper ">
+                            <span class="price"><?php echo $viewModel->getProductPrice($product); ?></span>
                         </span>
                     </span>
-                </div>
-                <?php if ($viewModel->getIsAddtoCartEnable()) : ?>
-                    <?php $postParams = $viewModel->getAddToCartPostParams($product); ?>
-                    <form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post">
-                        <input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
-                        <?php echo $block->getBlockHtml('formkey') ?>
-                        <?php $storeManager = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Store\Model\StoreManagerInterface'); ?>
-                        <button type="submit" class="action tocart primary">
-                            <span><?php echo __('Add to Cart') ?></span>
-                        </button>
-                    </form>
-                <?php endif; ?>
-                <?php if ($viewModel->getIsAddtoWishlistEnable()) : ?>
-                    <div class="product actions product-item-actions">
-                        <a href="#" class="action towishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>" aria-label="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>" data-post='<?= /* @noEscape */ $viewModel->getAddToWishlistParams($product) ?>' data-action="add-to-wishlist" role="button">
-                            <span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
-                        </a>
-                    </div>
-                <?php endif; ?>
+                </span>
             </div>
-        <?php endforeach; ?>
-    </section>
-<?php endif; ?>
+            <?php if ($viewModel->getIsAddtoCartEnable()) : ?>
+                <?php $postParams = $viewModel->getAddToCartPostParams($product); ?>
+                <form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post">
+                    <input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
+                    <?php echo $block->getBlockHtml('formkey') ?>
+                    <?php $storeManager = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Store\Model\StoreManagerInterface'); ?>
+                    <button type="submit" class="action tocart primary">
+                        <span><?php echo __('Add to Cart') ?></span>
+                    </button>
+                </form>
+            <?php endif; ?>
+            <?php if ($viewModel->getIsAddtoWishlistEnable()) : ?>
+                <div class="product actions product-item-actions">
+                    <a href="#" class="action towishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>" aria-label="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>" data-post='<?= /* @noEscape */ $viewModel->getAddToWishlistParams($product) ?>' data-action="add-to-wishlist" role="button">
+                        <span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
+                    </a>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</section>
 <script>
     var producPerSildeForBestSellers = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
     console.log(producPerSildeForBestSellers);

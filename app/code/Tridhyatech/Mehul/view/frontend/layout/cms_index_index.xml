@@ -7,28 +7,37 @@
     <body>
         <referenceBlock name="content">
             <container name="some.container" as="someContainer" label="Some Container" htmlTag="div" htmlClass="some-container">
-                <block name="featuredproducts" template="Tridhyatech_Mehul::featuredproducts.phtml">
+                <block name="featuredproducts" template="Tridhyatech_Mehul::featuredproducts.phtml" ifconfig="slider/feature/enable" >
                     <arguments>
                         <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\FeaturedProducts</argument>
                     </arguments>
                 </block>
             </container>
-            <block name="newproducts" template="Tridhyatech_Mehul::newproducts.phtml">
+            <block name="newproducts" ifconfig="slider/new/enable">
+                <!-- <arguments>
+                    <argument name="template" xsi:type="string">Tridhyatech_Mehul::newproducts.phtml</argument>
+                </arguments> -->
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Tridhyatech_Mehul::newproducts.phtml</argument>
+                </action>
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\NewProducts</argument>
                 </arguments>
             </block>
-            <block name="bestsellers" template="Tridhyatech_Mehul::bestsellers.phtml">
+            <block name="bestsellers" ifconfig="slider/bestsellers/enable">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Tridhyatech_Mehul::bestsellers.phtml</argument>
+                </action>
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\Bestsellers</argument>
                 </arguments>
             </block>
-            <block name="mostview" template="Tridhyatech_Mehul::mostview.phtml">
+            <block name="mostview" template="Tridhyatech_Mehul::mostview.phtml" ifconfig="slider/mostview/enable">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\MostView</argument>
                 </arguments>
             </block>
-            <block name="recentordered" template="Tridhyatech_Mehul::recentordered.phtml">
+            <block name="recentordered" template="Tridhyatech_Mehul::recentordered.phtml" ifconfig="slider/recentordered/enable">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Tridhyatech\Mehul\ViewModel\RecentOrdered</argument>
                 </arguments>
