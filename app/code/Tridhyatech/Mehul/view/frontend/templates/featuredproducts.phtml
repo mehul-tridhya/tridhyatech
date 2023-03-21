@@ -4,7 +4,7 @@ $viewModel = $block->getData('view_model');
 <?php if ($viewModel->getIsBlockEnable()) : ?>
     <?php $productCollection = $viewModel->getFeaturedProductsCollection(); ?>
     <div class="content-heading">
-        <h2 class="title"><?php echo $viewModel->getHeaderText(); ?></h2>
+        <h2 class="title"><?php echo __($viewModel->getHeaderText()); ?></h2>
     </div>
     <section class="feature-product slider">
         <?php foreach ($productCollection as $product) : ?>
