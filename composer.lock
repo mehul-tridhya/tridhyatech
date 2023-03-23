@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c40d9f36df4f4d84da31e406175d895a",
+    "content-hash": "bb75e9a850493fc0b57ccf42ecc8a05d",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -17315,50 +17315,6 @@
             "time": "2022-06-21T01:22:39+00:00"
         },
         {
-            "name": "mageplaza/magento-2-german-language-pack",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mageplaza/magento-2-german-language-pack.git",
-                "reference": "b5f599b55d114125aeffe02c2c70af2fc676d507"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-german-language-pack/zipball/b5f599b55d114125aeffe02c2c70af2fc676d507",
-                "reference": "b5f599b55d114125aeffe02c2c70af2fc676d507",
-                "shasum": ""
-            },
-            "require": {
-                "mageplaza/module-core": "^1.3.13"
-            },
-            "default-branch": true,
-            "type": "magento2-language",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mageplaza team",
-                    "email": "hi@mageplaza.com",
-                    "homepage": "https://www.mageplaza.com",
-                    "role": "Leader"
-                }
-            ],
-            "description": "German language package for Magento 2",
-            "homepage": "https://www.mageplaza.com",
-            "support": {
-                "issues": "https://github.com/mageplaza/magento-2-german-language-pack/issues",
-                "source": "https://github.com/mageplaza/magento-2-german-language-pack/tree/master"
-            },
-            "time": "2022-02-22T09:04:14+00:00"
-        },
-        {
             "name": "mageplaza/module-core",
             "version": "1.5.2",
             "source": {
@@ -26400,9 +26356,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "mageplaza/magento-2-german-language-pack": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
