@@ -1,0 +1,41 @@
+<?php $object = $block->getEditData(); ?>
+<div id="custom-form">
+    <form class="contact custom" action="<?php echo $block->getUrl('apicrud/index/save', ['_secure' => true]); ?>" id="custom-form" method="post" data-hasrequired="<?php echo __('* Required Fields') ?>" data-mage-init='{"validation":{}}'>
+        <fieldset class="fieldset">
+            <legend class="legend"><span><?php echo __("Blog") ?></span></legend><br />
+            <div class="field blog_title required">
+                <label class="label" for="blog_title"><span><?php echo __('Blog Title') ?></span></label>
+                <div class="control">
+                    <input name="blog_title" id="blog_title" title="<?php echo __('Title') ?>" class="input-text" type="text" data-validate="{required:true}" value="<?php echo $object->getBlogTitle(); ?>" />
+                    <?php if ($object->getId()) : ?>
+                        <input type="hidden" name="editId" id="editId" class="input-text" type="text" value="<?php echo $object->getId(); ?>" />
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="field blog_description required">
+                <label class="label" for="blog_description"><span><?php echo __('Blog Description') ?></span></label>
+                <div class="control">
+                    <textarea name="blog_description" id="blog_description" cols="30" rows="10"><?php echo $object->getBlogDescription(); ?></textarea>
+                </div>
+            </div>
+            <div class="field phone_no">
+                <label class="label" for="status"><span><?php echo __('Status') ?></span></label>
+                <label for="cars">Choose a car:</label>
+                <div class="control">
+                    <select name="status" id="status">
+                        <option <?php if($object->getStatus() == 1): ?> selected <?php endif; ?> value="1">Yes</option>
+                        <option <?php if($object->getStatus() == 0): ?> selected <?php endif; ?> value="0">No</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <input type="hidden" name="hideit" id="hideit" value="" />
+                <button type="submit" title="<?php echo __('Submit') ?>" class="action submit primary" id="custom_btn">
+                    <span><?php echo $object->getId() ? __('Save') : __('Submit') ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

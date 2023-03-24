@@ -1,0 +1,31 @@
+<table>
+    <tr>
+        <td><a class="action primary" href="<?= $block->getUrl('apicrud/index/insert'); ?>">Add Record</a></td>
+    </tr>
+    <tr>
+        <th><?= __('Title'); ?></th>
+        <th><?= __('Description'); ?></th>
+        <th><?= __('Status'); ?></th>
+        <th><?= __('Created At'); ?></th>
+        <th><?= __('Updated At'); ?></th>
+        <th colspan="2"><?= __('Action'); ?></th>
+    </tr>
+    <?php $collectionData = $block->getBlogData(); ?>
+    <?php if ($collectionData) : ?>
+        <?php foreach ($collectionData as $collection) : ?>
+            <tr>
+                <td><?= $collection->getBlogTitle(); ?></td>
+                <td><?= $collection->getBlogDescription(); ?></td>
+                <td><?= $collection->getStatus(); ?></td>
+                <td><?= $collection->getCreatedAt(); ?></td>
+                <td><?= $collection->getUpdatedAt(); ?></td>
+                <td>
+                    <a href="<?= $block->getUrl('apicrud/index/insert') . 'id/' . $collection->getId(); ?>" class="action primary">Edit</a>
+                </td>
+                <td>
+                    <a href="<?= $block->getUrl('apicrud/index/delete') . '?id=' . $collection->getId(); ?>" class="action primary">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</table>
