@@ -5,6 +5,7 @@ namespace Tridhyatech\ApiCrud\Model;
 use Tridhyatech\ApiCrud\Api\BlogRepositoryInterface;
 use Tridhyatech\ApiCrud\Api\Data\BlogInterface;
 use Tridhyatech\ApiCrud\Api\Data\BlogSearchResultInterface;
+use Magento\Framework\Api\DataObjectHelper;
 use Tridhyatech\ApiCrud\Api\Data\BlogSearchResultInterfaceFactory;
 use Tridhyatech\ApiCrud\Model\ResourceModel\Blog\CollectionFactory as BlogCollectionFactory;
 use Tridhyatech\ApiCrud\Model\ResourceModel\Blog\Collection;
@@ -12,6 +13,7 @@ use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Reflection\DataObjectProcessor;
 
 class BlogRepository implements BlogRepositoryInterface
 {
@@ -34,16 +36,30 @@ class BlogRepository implements BlogRepositoryInterface
      */
     private $collectionProcessor;
 
+    /**
+     * @var DataObjectHelper
+     */
+    protected $dataObjectHelper;
+
+    /**
+     * @var DataObjectProcessor
+     */
+    protected $dataObjectProcessor;
+
     public function __construct(
         BlogFactory $blogFactory,
         BlogCollectionFactory $blogCollectionFactory,
-        BlogSearchResultInterfaceFactory $amastySearchResultInterfaceFactory,
-        CollectionProcessorInterface $collectionProcessor
+        BlogSearchResultInterfaceFactory $blogSearchResultInterfaceFactory,
+        CollectionProcessorInterface $collectionProcessor,
+        DataObjectHelper $dataObjectHelper,
+        DataObjectProcessor $dataObjectProcessor,
     ) {
         $this->blogFactory = $blogFactory;
         $this->blogCollectionFactory = $blogCollectionFactory;
-        $this->searchResultFactory = $amastySearchResultInterfaceFactory;
-       $this->collectionProcessor = $collectionProcessor;
+        $this->searchResultFactory = $blogSearchResultInterfaceFactory;
+        $this->collectionProcessor = $collectionProcessor;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->dataObjectProcessor = $dataObjectProcessor;
     }
 
     public function getById($id)
@@ -74,13 +90,43 @@ class BlogRepository implements BlogRepositoryInterface
 
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
-       $collection = $this->blogCollectionFactory->create();
-       $this->collectionProcessor->process($searchCriteria, ($collection));
-       $searchResults = $this->searchResultFactory->create();
- 
-       $searchResults->setSearchCriteria($searchCriteria);
-       $searchResults->setItems($collection->getItems());
- 
-       return $searchResults;
+        $searchResults = $this->searchResultFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $collection = $this->blogCollectionFactory->create();
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition = $filter->getConditionType() ?: 'eq';
+                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+            }
+        }
+        $searchResults->setTotalCount($collection->getSize());
+        $sortOrdersData = $searchCriteria->getSortOrders();
+        if ($sortOrdersData) {
+            foreach ($sortOrdersData as $sortOrder) {
+                $collection->addOrder(
+                    $sortOrder->getField(),
+                    ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+                );
+            }
+        }
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+        $collection->setPageSize($searchCriteria->getPageSize());
+
+        $preorderItem = [];
+        /** @var Test $testModel */
+        foreach ($collection as $testModel) {
+            $testData = $this->blogFactory->create();
+            $this->dataObjectHelper->populateWithArray(
+                $testData,
+                $testModel->getData(),
+                'Tridhyatech\ApiCrud\Api\Data\BlogInterface'
+            );
+            $preorderItem[] = $this->dataObjectProcessor->buildOutputDataArray(
+                $testData,
+                'Tridhyatech\ApiCrud\Api\Data\BlogInterface'
+            );
+        }
+        $searchResults->setItems($preorderItem);
+        return $searchResults;
     }
 }
