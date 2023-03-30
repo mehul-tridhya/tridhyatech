@@ -1,0 +1,143 @@
+<div class="component-class">
+
+    <!-- display name -->
+    His name is <span data-bind="text: firstName"></span>
+    He is <span data-bind="text: Age"></span> years old
+    <div data-bind="text: 'Knockout Works Successfully'"></div>
+
+    <!-- style bindings -->
+    <div class="primary" data-bind="style: { color: 'red' }">
+        This is Your Full Name <span data-bind="text: fullName"></span>
+    </div>
+
+    <!-- get value from input -->
+    <div class="field">
+        <div class="control">
+            <input name="firstName" id="firstName" type="text" class="input-text" data-bind="value: firstName">
+            <input name="Age" id="Age" type="number" data-bind="value: Age">
+        </div>
+    </div>
+
+    <!-- Interactive Binding enable  -->
+    <!-- enable  -->
+    <input type='checkbox' data-bind="enable: isEnable" /> is enable
+    <!-- checked  -->
+    <p>Send me spam: <input type="checkbox" data-bind="checked: isChecked" /></p>
+
+
+    <!-- The “foreach” binding -->
+    <table>
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+            </tr>
+        </thead>
+        <!-- <tbody data-bind="foreach: people">
+            <tr>
+                <td data-bind="text: firstName"></td>
+                <td data-bind="text: Age"></td>
+            </tr>
+        </tbody> -->
+        <tbody>
+            <!-- ko foreach: people -->
+            <tr>
+                <td data-bind="text: $data.firstName"></td>
+                <td data-bind="text: $data.Age"></td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+    <div class="primary">
+        <button type="button" class="action action-login secondary" data-bind="click: addNewPeople">
+            <span data-bind="i18n: 'Save'"></span>
+        </button>
+    </div>
+
+    <!-- The “if” and “ifnot” binding -->
+    <div data-bind="if: isDisplayMessage">Here is a message.</div>
+    <div data-bind="ifnot: isHideName">Here is a Name.</div>
+
+    <!-- The “using” binding -->
+    <h1 data-bind="text: city"> </h1>
+    <p data-bind="using: coords">
+        Latitude: <span data-bind="text: latitude"> </span>,
+        Longitude: <span data-bind="text: longitude"> </span>
+    </p>
+
+    <!-- The “with” binding -->
+    <div data-bind="with: resultData">
+        <h3>Recent tweets fetched at <span data-bind="text: retrievalDate"> </span></h3>
+        <ol data-bind="foreach: topTweets">
+            <li data-bind="text: text"></li>
+        </ol>
+        <button data-bind="click: $parent.clearResults">Clear tweets</button>
+    </div>
+    <div class="primary">
+        <button type="button" class="action action-login secondary" data-bind="click: getTweets">
+            <span data-bind="i18n: 'getTweets'"></span>
+        </button>
+    </div>
+
+    <!-- The “let” binding -->
+    <!-- It is used to work with multiple arrays in the same binding. -->
+
+    <!--ko let: {inventory: {suppliers: suppliers, bins: bins}, calculatedDisplay: someCalculation}-->
+    <div data-bind="foreach: {data: inventory.suppliers, as: 'supplier'}">
+        <div data-bind=" foreach: {data: inventory.bins, as: 'bin' }">
+            <span data-bind="text: calculatedDisplay(supplier, bin)">
+        </div>
+    </div>
+    <!--/ko-->
+
+
+    <!-- Binding context -->
+
+    <h1 data-bind="text: name"></h1>
+    <div data-bind="with: manager">
+        <!-- Now we're inside a nested binding context -->
+        <span data-bind="text: name"></span> is the
+        manager of <span data-bind="text: $parent.name"></span>
+    </div>
+
+    <!-- Rendering templates -->
+    <!-- Using the “foreach” option with a named template -->
+    <h2>Participants</h2>
+    Here are the participants:
+    <div data-bind="foreach: persons">
+        <div data-bind="template: { name: 'person-template', data: $data }"></div>
+    </div>
+    <!-- <div data-bind="foreach: persons">
+        <h3 data-bind="text: $data.name"></h3>
+        <p>Credits: <span data-bind="text: $data.credits"></span></p>
+    </div> -->
+    <!-- <div data-bind="template: { name: 'person-template', data: buyer }"></div> -->
+    <script type="text/html" id="person-template">
+        <h3 data-bind="text: name"></h3>
+        <p>Credits: <span data-bind="text: credits"></span></p>
+    </script>
+    <calculate-sum params=”number1: 2, number2: 3”></calculate-sum>
+
+    <h4>Component binding without parameters</h4>
+    <div data-bind='component: "calculate-sum"'></div>
+    <h4>Component binding passing parameters</h4>
+    <div data-bind='component: {
+         name: "calculate-sum",
+         params: { number1: 2, number2: 3 }
+      }'></div>
+
+    <div class=" field">
+        <label class="label" for="email"><span data-bind="i18n: 'New Customer'"></span></label>
+        <div class="control">
+            <input name="customername" id="customername" type="text" class="input-text" data-bind="value: customerData">
+        </div>
+    </div>
+    <div class="primary">
+        <button type="button" class="action action-login secondary" data-bind="click: addNewCustomer">
+            <span data-bind="i18n: 'Save'"></span>
+        </button>
+    </div>
+    <div class="customer-list" style="width: 20%;background: gray;margin-top: 10px;" data-bind="foreach: customerName">
+        <li data-bind="text: name"></li>
+    </div>
+</div>
