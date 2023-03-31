@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @var $block \Magento\Checkout\Block\Cart
+ */
+
+if ($block->getItemsCount()) {
+    // phpcs:ignore Magento2.Security.LanguageConstruct.DirectOutput
+    echo $block->getChildHtml('with-items');
+} else {
+    // phpcs:ignore Magento2.Security.LanguageConstruct.DirectOutput
+    echo $block->getChildHtml('no-items');
+}
+?>
+<div id="testdiv">
+    <a>Test anchor tag</a>
+</div>
+<?php
+$formData = [
+    'divElement'       =>  '#testdiv',
+];
+$serializedFormData = $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($formData);
+?>
+<script>
+    var customnew;
+    require([
+        'jquery',
+        'custom_js'
+    ],function ($,custom) {
+        customnew = custom;
+    });
+</script>
