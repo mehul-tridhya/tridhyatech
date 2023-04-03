@@ -1,0 +1,31 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="content">
+            <block class="Tridhyatech\XmlKnockout\Block\Index" name="proslider" template="Tridhyatech_XmlKnockout::index.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="emipro-knockout" xsi:type="array">
+                                <item name="component" xsi:type="string">Tridhyatech_XmlKnockout/js/emiproko</item>
+                                <item name="template" xsi:type="string">Tridhyatech_XmlKnockout/kotemplate</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="custommessage" xsi:type="string" translate="true">Emipro</item>
+                                </item>
+                                <item name="children" xsi:type="array">
+                                    <item name="emipro-child-ko" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">1</item>
+                                        <item name="component" xsi:type="string">Tridhyatech_XmlKnockout/js/childko</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="template" xsi:type="string">Tridhyatech_XmlKnockout/child-ko</item>
+                                        </item>
+                                        <item name="displayArea" xsi:type="string">child-ko</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,9 @@
+<h1>sub template</h1>
+<div class="emipro-knockout-example" data-bind="text:getText()"></div>
+<div data-bind="text:custommessage"></div>
+<!-- ko foreach: getRegion('child-ko') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!--/ko-->
+<div data-bind="scope: requestChild('emipro-child-ko')">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>

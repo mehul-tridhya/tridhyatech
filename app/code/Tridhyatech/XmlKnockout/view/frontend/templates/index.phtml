@@ -1,0 +1,13 @@
+<h1>This is main template</h1>
+<div id="emipro-knockout" data-bind="scope:'emipro-knockout'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#emipro-knockout":
+         {
+            "Magento_Ui/js/core/app":  <?php /* @escapeNotVerified */ echo json_encode($block->getData('jsLayout')); ?>
+         }
+    }
+</script>
