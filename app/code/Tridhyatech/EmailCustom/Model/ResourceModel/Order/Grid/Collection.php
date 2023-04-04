@@ -24,7 +24,7 @@ class Collection extends OrderGridCollection
         $this->getSelect()->joinLeft(
             ['sales_order_table' => $joinTable],
             'main_table.entity_id = sales_order_table.entity_id',
-            ['delivery_note'] // you can add other attributes here
+            ['delivery_note','delivery_date'] // you can add other attributes here
         );
         parent::_renderFiltersBefore();
     }

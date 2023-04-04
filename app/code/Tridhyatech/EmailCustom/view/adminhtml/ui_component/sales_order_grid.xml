@@ -10,5 +10,16 @@
                 </item>
             </argument>
         </column>
+        <column name="delivery_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="label" xsi:type="string" translate="true">Delivery Date</item>
+                    <item name="dateFormat" xsi:type="string">Y-MM-dd</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                </item>
+            </argument>
+        </column>
     </columns>
 </listing>

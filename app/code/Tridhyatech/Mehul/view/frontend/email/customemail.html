@@ -56,15 +56,22 @@
                 </tr>
             </table>
             {{/depend}}
-            {{depend delivery_note}}
-            <table class="message-info">
+            <table class="">
                 <tr>
+                    {{depend delivery_note}}
                     <td>
-                        {{var delivery_note|escape|nl2br}}
+                        <h3>{{trans "Delivery Note"}}</h3>
+                        <p>{{var delivery_note|escape|nl2br}}</p>
                     </td>
+                    {{/depend}}
+                    {{depend delivery_date}}
+                    <td>
+                        <h3>{{trans "Delivery Date"}}</h3>
+                        <p>{{var delivery_date|escape|nl2br}}</p>
+                    </td>
+                    {{/depend}}
                 </tr>
             </table>
-            {{/depend}}
             <table class="order-details">
                 <tr>
                     <td class="address-details">

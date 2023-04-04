@@ -5,6 +5,9 @@
             <field name="delivery_note">
                 <aspect name="to_order" />
             </field>
+            <field name="delivery_date">
+                <aspect name="to_order" />
+            </field>
         </fieldset>
     </scope>
 </config>

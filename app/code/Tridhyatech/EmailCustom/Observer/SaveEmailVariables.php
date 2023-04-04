@@ -14,6 +14,7 @@ class SaveEmailVariables implements ObserverInterface
 
         if ($order != null) {
             $transport['delivery_note'] = $order->getDeliveryNote();
+            $transport['delivery_date'] = date('F d, Y', strtotime($order->getDeliveryDate()));
         }
     }
 }

@@ -26,8 +26,11 @@ class ShippingInformationManagement
         $shippingAddressExtensionAttributes = $shippingAddress->getExtensionAttributes();
         if ($shippingAddressExtensionAttributes) {
             $deliveryNote = $shippingAddressExtensionAttributes->getDeliveryNote();
+            $deliveryDate = $shippingAddressExtensionAttributes->getDeliveryDate();
             $shippingAddress->setDeliveryNote($deliveryNote);
             $quote->setDeliveryNote($deliveryNote);
+            $shippingAddress->setDeliveryDate($deliveryDate);
+            $quote->setDeliveryDate($deliveryDate);
             $this->cartRepository->save($quote);
         }
     }
