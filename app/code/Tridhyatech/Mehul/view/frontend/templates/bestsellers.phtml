@@ -46,7 +46,6 @@ $viewModel = $block->getData('view_model');
 </section>
 <script>
     var producPerSildeForBestSellers = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    console.log(producPerSildeForBestSellers);
     require(['jquery', 'domReady', 'jquery/ui', 'slick'], function($, domReady) {
         domReady(function() {
             $(".bestsellers-product").slick({

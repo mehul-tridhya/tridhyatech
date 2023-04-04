@@ -48,7 +48,6 @@ $viewModel = $block->getData('view_model');
 <?php endif; ?>
 <script>
     var producPerSildeRecentordered = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    console.log(producPerSildeRecentordered);
     require(['jquery', 'domReady', 'jquery/ui', 'slick'], function($, domReady) {
         domReady(function() {
             $(".recentordered-product").slick({

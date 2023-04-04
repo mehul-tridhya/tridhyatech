@@ -46,7 +46,6 @@ $viewModel = $block->getData('view_model');
 </section>
 <script>
     var producPerSildeForNew = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    console.log(producPerSildeForNew);
     require(['jquery', 'domReady', 'jquery/ui', 'slick'], function($, domReady) {
         domReady(function() {
             $(".new-product").slick({

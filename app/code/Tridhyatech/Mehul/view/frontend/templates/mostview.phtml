@@ -46,7 +46,6 @@ $viewModel = $block->getData('view_model');
 </section>
 <script>
     var producPerSildeForMostView = "<?php echo $viewModel->getProductPerSildeConfig(); ?>";
-    console.log(producPerSildeForMostView);
     require(['jquery', 'domReady', 'jquery/ui', 'slick'], function($, domReady) {
         domReady(function() {
             $(".mostview-product").slick({

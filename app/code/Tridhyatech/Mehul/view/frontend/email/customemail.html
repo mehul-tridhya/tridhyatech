@@ -56,6 +56,15 @@
                 </tr>
             </table>
             {{/depend}}
+            {{depend delivery_note}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var delivery_note|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
             <table class="order-details">
                 <tr>
                     <td class="address-details">
