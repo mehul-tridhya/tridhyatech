@@ -20,7 +20,7 @@
                                                 <item name="children" xsi:type="array">
                                                     <item name="shippingAddress" xsi:type="array">
                                                         <item name="children" xsi:type="array">
-                                                            <item name="shipping-address-fieldset" xsi:type="array">
+                                                            <item name="before-form" xsi:type="array">
                                                                 <item name="children" xsi:type="array">
                                                                     <item name="delivery_note" xsi:type="array">
                                                                         <item name="component" xsi:type="string">Magento_Ui/js/form/element/textarea</item>
@@ -31,7 +31,7 @@
                                                                                 <item name="description" xsi:type="string" translate="true">Here you can leave delivery notes</item>
                                                                             </item>
                                                                         </item>
-                                                                        <item name="dataScope" xsi:type="string">shippingAddress.extension_attributes.delivery_note</item>
+                                                                        <item name="dataScope" xsi:type="string">shippingAddress.delivery_note</item>
                                                                         <item name="label" xsi:type="string">Delivery Notes</item>
                                                                         <item name="provider" xsi:type="string">checkoutProvider</item>
                                                                         <item name="sortOrder" xsi:type="string">1000</item>
@@ -45,7 +45,7 @@
                                                                             <item name="template" xsi:type="string">ui/form/field</item>
                                                                             <item name="elementTmpl" xsi:type="string">ui/form/element/date</item>
                                                                         </item>
-                                                                        <item name="dataScope" xsi:type="string">shippingAddress.extension_attributes.delivery_date</item>
+                                                                        <item name="dataScope" xsi:type="string">shippingAddress.delivery_date</item>
                                                                         <item name="label" xsi:type="string">Delivery Date</item>
                                                                         <item name="provider" xsi:type="string">checkoutProvider</item>
                                                                         <item name="sortOrder" xsi:type="string">1000</item>
