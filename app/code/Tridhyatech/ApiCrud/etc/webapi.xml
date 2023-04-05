@@ -3,32 +3,32 @@
     <route method="GET" url="/V1/blog/blog-api/:id">
         <service class="Tridhyatech\ApiCrud\Api\BlogRepositoryInterface" method="getById"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Tridhya_UiExample::grid"/>
         </resources>
     </route>
     <route method="POST" url="/V1/blog/blog-save">
         <service class="Tridhyatech\ApiCrud\Api\BlogRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Tridhya_UiExample::grid"/>
         </resources>
     </route>
     <route method="PUT" url="/V1/blog/blog-update">
         <service class="Tridhyatech\ApiCrud\Api\BlogRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Tridhya_UiExample::grid"/>
         </resources>
     </route>
     <route method="DELETE" url="/V1/blog/blog-delete/:blog_id">
         <service class="Tridhyatech\ApiCrud\Api\BlogRepositoryInterface" method="deleteById"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Tridhya_UiExample::grid"/>
         </resources>
     </route>
 
     <route method="GET" url="/V1/blog/blog-getall">
         <service class="Tridhyatech\ApiCrud\Api\BlogRepositoryInterface" method="getList"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Tridhya_UiExample::grid"/>
         </resources>
     </route>
 </routes>

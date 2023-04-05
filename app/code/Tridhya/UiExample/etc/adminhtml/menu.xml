@@ -9,7 +9,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Tridhya_UiExample::view" title="Tridhya Blog" module="Tridhya_UiExample" sortOrder="50" resource="Tridhya_UiExample::view"/>
-        <add id="Tridhya_UiExample::menu" title="Manage Grid" module="Tridhya_UiExample" sortOrder="20" parent="Tridhya_UiExample::view" action="uiexample/index/index" resource="Tridhya_UiExample::menu"/>
+        <add id="Tridhya_UiExample::menu" title="Tridhya Blog" module="Tridhya_UiExample" sortOrder="50" resource="Tridhya_UiExample::menu"/>
+        <add id="Tridhya_UiExample::grid" title="Manage Grid" module="Tridhya_UiExample" sortOrder="20" parent="Tridhya_UiExample::menu" action="uiexample/index/index" resource="Tridhya_UiExample::grid"/>
     </menu>
 </config>

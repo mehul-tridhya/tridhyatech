@@ -14,15 +14,17 @@
             <item name="deps" xsi:type="string">tridhya_uiexample_blog_listing.tridhya_uiexample_blog_listing_data_source</item>
         </item>
         <item name="spinner" xsi:type="string">uiexample_blog_columns</item>
-        <item name="buttons" xsi:type="array">
-            <item name="add" xsi:type="array">
-                <item name="name" xsi:type="string">add123</item>
-                <item name="label" xsi:type="string" translate="true">Add New</item>
-                <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">*/*/add</item>
-            </item>
-        </item>
     </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/add"/>
+                <class>primary</class>
+                <label translate="true">Add New</label>
+                <aclResource>Magento_Sales::create</aclResource>
+            </button>
+        </buttons>
+    </settings>
     <dataSource name="tridhya_uiexample_blog_listing_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">TridhyaUiExampleBlogFilterPool</argument>
