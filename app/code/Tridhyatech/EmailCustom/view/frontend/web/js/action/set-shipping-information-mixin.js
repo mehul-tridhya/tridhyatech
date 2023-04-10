@@ -22,7 +22,6 @@ define([
                     'delivery_note': deliveryNote
                 }
             }
-            console.log(shippingAddress.extensionAttributes);
             // you can write here your code according to your requirement
             return originalAction(); // it is returning the flow to original action
         });

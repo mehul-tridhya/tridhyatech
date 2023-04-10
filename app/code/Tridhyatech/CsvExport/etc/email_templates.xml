@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="low_stock_product_template" label="Low Stock" file="low_stock.html" type="html" module="Tridhyatech_CsvExport" area="frontend"/>
+</config>
