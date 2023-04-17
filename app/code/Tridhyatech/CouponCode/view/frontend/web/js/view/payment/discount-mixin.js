@@ -5,31 +5,40 @@
 
 define([
     'jquery',
-    'mage/url'
-], function ($,url) {
+    'ko',
+    'Magento_SalesRule/js/model/coupon',
+    'mage/url',
+    'Tridhyatech_CouponCode/js/model/couponcodes',
+    'domReady'
+], function ($, ko, coupon, url,couponcodesmodel,domReady) {
     'use strict';
-    var customData = window.customConfig;
+    domReady(function() {
+        couponcodesmodel.getCouponCode(true);
+    });
+    var couponCode = coupon.getCouponCode();
+    var couponCodes = couponcodesmodel.getCouponCodes();
+    var isCouponAvailable = couponcodesmodel.getIsCouponApplied();
+    isCouponAvailable.subscribe(function(newValue) {
+        if(newValue){
+            couponcodesmodel.getCouponCode();
+        };
+    });
     return function (targetModule) {
         return targetModule.extend({
             defaults: {
                 template: 'Tridhyatech_CouponCode/payment/discount'
             },
-            customFunction: function () {
-                for (let i = 0; i < customData.length; i++) {
-                    var apiUrl = url.build("rest/default/V1/carts/mine/validcoupons/" + customData[i]);
-                    $.ajax({
-                        type: "POST",
-                        url: apiUrl,
-                        data: {},
-                        success: function (response) {
-                            console.log(customData[i]);
-                            validCouponCodes.push(customData[i]);
-                        },
-                        dataType: 'json',
-                        contentType: 'application/json',
-                    });
-                }
+            couponcodes: couponCodes,
+            isCouponAvailable: isCouponAvailable,
+            initialize: function () {
+                var self = this;
+                this._super();
             },
+            customFunction: function (data, event) {
+                event.stopPropagation();
+                couponCode(data);
+                this.apply();
+            }
         })
     }
 });

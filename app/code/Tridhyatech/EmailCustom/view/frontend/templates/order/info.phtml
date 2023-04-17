@@ -68,7 +68,7 @@
                 <span><?= $block->escapeHtml(__('Delivery Date')) ?></span>
             </strong>
             <div class="box-content">
-                <?= /* @noEscape */ date('F d, Y', strtotime($_order->getDeliveryDate())); ?>
+                <?= /* @noEscape */ $_order->getDeliveryDate(); ?>
             </div>
         </div>
     </div>

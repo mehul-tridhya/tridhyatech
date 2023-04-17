@@ -8,12 +8,23 @@
     data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
     <div class="payment-option-title field choice" data-role="title">
         <span class="action action-toggle" id="block-discount-heading" role="heading" aria-level="2">
-            <!-- ko i18n: 'Apply Discount Code 123'--><!-- /ko -->
+            <!-- ko i18n: 'Show Discount Code'--><!-- /ko -->
         </span>
     </div>
     <div class="payment-option-content" data-role="content">
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <!-- ko ifnot: isApplied() -->
+            <!-- ko if: isCouponAvailable -->
+            <select data-bind="options: couponcodes,
+            optionsText: $data,
+            value: $data,
+            optionsCaption: 'Select Any Coupon',event:{ change: function(data, event) { customFunction(data, event) }},clickBubble: false"></select>  
+            <!--/ko-->
+        <!-- ko ifnot: isCouponAvailable -->
+            <span><!-- ko i18n: 'No Any Discount Code Available.'--><!-- /ko --></span>
+        <!--/ko-->
         <!--/ko-->
         <form class="form form-discount" id="discount-form">
             <div class="payment-option-inner">
@@ -24,7 +35,7 @@
                     <div class="control">
                         <input class="input-text" type="text" id="discount-code" name="discount_code"
                             data-validate="{'required-entry':true}"
-                            data-bind="value: couponCode, attr:{disabled:isApplied() , placeholder: $t('Enter discount code')} " />
+                            data-bind="value: couponCode, attr:{disabled:isApplied() , placeholder: $t('Enter discount code')}, visible: isApplied" />
                     </div>
                 </div>
             </div>
@@ -32,7 +43,7 @@
                 <div class="primary">
                     <!-- ko ifnot: isApplied() -->
                     <button class="action action-apply" type="submit"
-                        data-bind="'value': $t('Apply Discount'), click: apply">
+                        data-bind="'value': $t('Apply Discount'), click: apply, visible: isApplied">
                         <span><!-- ko i18n: 'Apply Discount'--><!-- /ko --></span>
                     </button>
                     <!-- /ko -->
@@ -48,12 +59,4 @@
             </div>
         </form>
     </div>
-    <div>
-        <!-- ko foreach: window.customConfig -->
-        <span data-bind="text: $data"></span><br></br>
-        <!--/ko-->
-    </div>
-    <button class="action action-login secondary" type="button" data-bind="click: customFunction">
-        <span data-bind="i18n: 'Show All Coupons'"></span>
-    </button>
 </div>
