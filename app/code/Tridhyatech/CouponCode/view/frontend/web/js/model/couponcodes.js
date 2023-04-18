@@ -14,7 +14,8 @@ define([
     'use strict';
 
     var couponCodes = ko.observableArray(null),
-        isCouponApplied = ko.observable(null);
+        isCouponApplied = ko.observable(null),
+        isModuleEnable = ko.observable(false);
     return {
         couponCodes: couponCodes,
         isCouponApplied: isCouponApplied,
@@ -33,6 +34,13 @@ define([
             return isCouponApplied;
         },
 
+        getIsModuleEnable: function () {
+            return isModuleEnable;
+        },
+
+        setIsModuleEnable: function (isModuleEnableValue) {
+            isModuleEnable(isModuleEnableValue);
+        },
         
         setCouponCodes: function (coupons) {
             couponCodes(coupons);
@@ -55,9 +63,15 @@ define([
                 data: {},
                 success: function (response) {
                     self.setCouponCodes([]);
+                    if (response.is_module_enable) {
+                        var isEnable = response.is_module_enable;
+                        self.setIsModuleEnable(isEnable);
+                    }
                     if (response.couponcodes && response.couponcodes.length) {
                         var codes = response.couponcodes;
+                        var isEnable = response.is_module_enable;
                         self.setCouponCodes(codes);
+                        self.setIsModuleEnable(isEnable);
                         if(flag){
                             self.setIsCouponApplied(true);
                         }

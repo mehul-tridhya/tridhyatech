@@ -16,12 +16,13 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
 ?>
 <?php $childBlock = $block->getChildBlock('coupon.child'); ?>
 <?php $couponCodes = $childBlock->getCouponCodes(); ?>
+<?php $isModuleEnable = $childBlock->isModuleEnable(); ?>
 <div class="block discount" id="block-discount" data-mage-init='{"collapsible":{"active": <?= $hasCouponCode ? 'true' : 'false' ?>, "openedState": "active", "saveState": false}}'>
     <div class="title" data-role="title">
-        <strong id="block-discount-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Show Discount Code')) ?></strong>
+        <strong id="block-discount-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Apply Discount Code')) ?></strong>
     </div>
     <div class="content" data-role="content" aria-labelledby="block-discount-heading">
-        <?php if (!$hasCouponCode) : ?>
+        <?php if ($isModuleEnable && !$hasCouponCode) : ?>
             <?php if (count($couponCodes) != 0) : ?>
                 <select name="apply_coupon_code" id="apply_coupon_code" onchange="coupon.applyCouponCode(this)">
                     <option value=""><?= $block->escapeHtml(__('Select Any Coupon')) ?></option>
@@ -46,21 +47,37 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
                             <span><?= $block->escapeHtml(__('Enter discount code')) ?></span>
                         </label>
                         <div class="control">
-                            <input type="text" class="input-text" id="coupon_code" name="coupon_code" value="<?= $block->escapeHtmlAttr($block->getCouponCode()) ?>" placeholder="<?= $block->escapeHtmlAttr(__('Enter discount code')) ?>" <?php if ($hasCouponCode) : ?> disabled="disabled" <?php endif; ?> <?php if (!$hasCouponCode) : ?>style="display:none" <?php endif; ?> />
+                            <input type="text" class="input-text" id="coupon_code" name="coupon_code" value="<?= $block->escapeHtmlAttr($block->getCouponCode()) ?>" placeholder="<?= $block->escapeHtmlAttr(__('Enter discount code')) ?>" <?php if ($hasCouponCode) : ?> disabled="disabled" <?php endif; ?> <?php if ($isModuleEnable && !$hasCouponCode) : ?>style="display:none" <?php endif; ?> />
                         </div>
                     </div>
                     <div class="actions-toolbar">
-                        <div class="primary" style="display:none">
-                            <button class="action apply primary" type="button" value="<?= $block->escapeHtmlAttr(__('Apply Discount')) ?>">
-                                <span><?= $block->escapeHtml(__('Apply Discount')) ?></span>
-                            </button>
-                        </div>
-                        <?php if ($hasCouponCode) : ?>
-                            <div class="primary">
-                                <button type="button" class="action cancel primary" value="<?= $block->escapeHtmlAttr(__('Cancel Coupon')) ?>">
-                                    <span><?= $block->escapeHtml(__('Cancel Coupon')) ?></span>
+                        <?php if ($isModuleEnable) : ?>
+                            <div class="primary" style="display:none">
+                                <button class="action apply primary" type="button" value="<?= $block->escapeHtmlAttr(__('Apply Discount')) ?>">
+                                    <span><?= $block->escapeHtml(__('Apply Discount')) ?></span>
                                 </button>
                             </div>
+                            <?php if ($hasCouponCode) : ?>
+                                <div class="primary">
+                                    <button type="button" class="action cancel primary" value="<?= $block->escapeHtmlAttr(__('Cancel Coupon')) ?>">
+                                        <span><?= $block->escapeHtml(__('Cancel Coupon')) ?></span>
+                                    </button>
+                                </div>
+                            <?php endif; ?>
+                        <?php else : ?>
+                            <?php if (!$hasCouponCode) : ?>
+                                <div class="primary">
+                                    <button class="action apply primary" type="button" value="<?= $block->escapeHtmlAttr(__('Apply Discount')) ?>">
+                                        <span><?= $block->escapeHtml(__('Apply Discount')) ?></span>
+                                    </button>
+                                </div>
+                            <?php else : ?>
+                                <div class="primary">
+                                    <button type="button" class="action cancel primary" value="<?= $block->escapeHtmlAttr(__('Cancel Coupon')) ?>">
+                                        <span><?= $block->escapeHtml(__('Cancel Coupon')) ?></span>
+                                    </button>
+                                </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -74,6 +91,5 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
     var coupon;
     require(['jquery', 'couponCode'], function($, couponCode) {
         coupon = couponCode;
-        console.log(coupon);
     });
 </script>

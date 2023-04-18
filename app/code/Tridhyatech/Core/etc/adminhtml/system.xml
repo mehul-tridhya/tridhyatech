@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+         <tab id="tridhyatech" translate="label" sortOrder="500">
+            <label>Tridhyatech Extensions</label>
+        </tab>
+    </system>
+</config>

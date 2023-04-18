@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+   <system>
+       <section id="coupon_code_config" translate="label" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+           <class>separator-top</class>
+           <label>Auto Apply Coupon</label>
+           <tab>tridhyatech</tab>
+           <resource>Tridhyatech_CouponCode::couponconfig</resource>
+           <group id="coupon_list" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1">
+               <label>Settings</label>
+               <field id="is_active" translate="label comment" type="select" sortOrder="25" showInDefault="1"  showInWebsite="1" canRestore="1">
+                   <label>Enable Module</label>
+                   <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+               </field>
+           </group>
+       </section>
+   </system>
+</config>

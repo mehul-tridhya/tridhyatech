@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="tridhyatech" translate="label" sortOrder="10">
+        <tab id="tridhyatechnew" translate="label" sortOrder="10">
             <label>Tridhya Tech</label>
         </tab>
         <section id="slider" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Slider Config.</label>
-            <tab>tridhyatech</tab>
+            <tab>tridhyatechnew</tab>
             <resource>Tridhyatech_Mehul::tridhyatech_config</resource>
             <group id="feature" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Featured Product</label>

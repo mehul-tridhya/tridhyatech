@@ -18,6 +18,7 @@ define([
     var couponCode = coupon.getCouponCode();
     var couponCodes = couponcodesmodel.getCouponCodes();
     var isCouponAvailable = couponcodesmodel.getIsCouponApplied();
+    var isModuleEnable = couponcodesmodel.getIsModuleEnable();
     isCouponAvailable.subscribe(function(newValue) {
         if(newValue){
             couponcodesmodel.getCouponCode();
@@ -30,6 +31,7 @@ define([
             },
             couponcodes: couponCodes,
             isCouponAvailable: isCouponAvailable,
+            isModuleEnable : isModuleEnable,
             initialize: function () {
                 var self = this;
                 this._super();
