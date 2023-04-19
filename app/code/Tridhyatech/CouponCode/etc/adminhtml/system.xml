@@ -12,6 +12,10 @@
                    <label>Enable Module</label>
                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                </field>
+               <field id="type" translate="label comment" type="select" sortOrder="25" showInDefault="1"  showInWebsite="1" canRestore="1">
+                   <label>Coupon Type</label>
+                   <source_model>Tridhyatech\CouponCode\Model\Config\Source\CouponTypes</source_model>
+               </field>
            </group>
        </section>
    </system>

@@ -15,7 +15,7 @@ define(
         'use strict';
         var mixins = {
             couponcodes: couponcodesmodel.getCouponCodes(),
-            isCouponAvailable: couponcodesmodel.getIsCouponApplied(),
+            isCouponChanged: couponcodesmodel.getIsCouponChanged(),
             setShippingInformation: function () { //Define new content for getTotal() function
                 var _return = this._super(arguments); //Call default quote get Totals function.
                 this.getCouponCode();
@@ -31,12 +31,18 @@ define(
                     showLoader: true,
                     data: {},
                     success: function (response) {
-                        self.couponcodes([]);
-                        self.isCouponAvailable(false);
-                        if (response.couponcodes && response.couponcodes.length) {
+                        couponcodesmodel.setCouponCodes([]);
+                        if (response.is_module_enable) {
+                            var isEnable = response.is_module_enable;
+                            couponcodesmodel.setIsModuleEnable(isEnable);
+                        }
+                        if (response.coupon_list_type) {
+                            couponcodesmodel.setCouponListType(parseInt(response.coupon_list_type));
+                        }
+                        if (response.couponcodes) {
                             var codes = response.couponcodes;
-                            self.couponcodes(codes.concat(self.couponcodes()));
-                            self.isCouponAvailable(true);
+                            self.isCouponChanged(true);
+                            self.couponcodes(codes);
                         }
                     }
                 });

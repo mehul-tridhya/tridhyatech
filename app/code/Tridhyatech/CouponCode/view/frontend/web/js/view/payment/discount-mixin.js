@@ -9,19 +9,22 @@ define([
     'Magento_SalesRule/js/model/coupon',
     'mage/url',
     'Tridhyatech_CouponCode/js/model/couponcodes',
-    'domReady'
-], function ($, ko, coupon, url,couponcodesmodel,domReady) {
+    'domReady',
+    'Magento_Ui/js/modal/modal'
+], function ($, ko, coupon, url,couponcodesmodel,domReady,modal) {
     'use strict';
     domReady(function() {
-        couponcodesmodel.getCouponCode(true);
+        couponcodesmodel.getCouponCode();
     });
     var couponCode = coupon.getCouponCode();
     var couponCodes = couponcodesmodel.getCouponCodes();
-    var isCouponAvailable = couponcodesmodel.getIsCouponApplied();
     var isModuleEnable = couponcodesmodel.getIsModuleEnable();
-    isCouponAvailable.subscribe(function(newValue) {
+    var couponListType = couponcodesmodel.getCouponListType();
+    var isCouponChanged = couponcodesmodel.getIsCouponChanged();
+    isCouponChanged.subscribe(function(newValue) {
         if(newValue){
             couponcodesmodel.getCouponCode();
+            couponcodesmodel.setIsCouponChanged(false);
         };
     });
     return function (targetModule) {
@@ -30,16 +33,29 @@ define([
                 template: 'Tridhyatech_CouponCode/payment/discount'
             },
             couponcodes: couponCodes,
-            isCouponAvailable: isCouponAvailable,
             isModuleEnable : isModuleEnable,
+            couponListType : couponListType,
             initialize: function () {
                 var self = this;
                 this._super();
             },
-            customFunction: function (data, event) {
-                event.stopPropagation();
-                couponCode(data);
+            applyCuponCode: function (couponvalue,elementId) {
+                couponCode(couponvalue);
                 this.apply();
+                $(elementId).modal("closeModal");
+            },
+            openCouponModal: function (elementId) {
+                var title = this.couponListType() == 1 ? 'All Coupons' : 'Available Coupons'; 
+                var options = {
+                    type: 'slide',
+                    responsive: true,
+                    innerScroll: true,
+                    title: title,
+                    modalClass: 'coupon-list-modal',
+                    buttons: []
+                };
+                var popup = modal(options, $(elementId));
+                $(elementId).modal("openModal");
             }
         })
     }

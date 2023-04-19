@@ -14,24 +14,17 @@ define([
     'use strict';
 
     var couponCodes = ko.observableArray(null),
-        isCouponApplied = ko.observable(null),
-        isModuleEnable = ko.observable(false);
+        isModuleEnable = ko.observable(false),
+        couponListType = ko.observable(1),
+        isCouponChanged = ko.observable(false);
     return {
         couponCodes: couponCodes,
-        isCouponApplied: isCouponApplied,
 
         /**
          * @return {*}
          */
         getCouponCodes: function () {
             return couponCodes;
-        },
-
-        /**
-         * @return {Boolean}
-         */
-        getIsCouponApplied: function () {
-            return isCouponApplied;
         },
 
         getIsModuleEnable: function () {
@@ -41,18 +34,27 @@ define([
         setIsModuleEnable: function (isModuleEnableValue) {
             isModuleEnable(isModuleEnableValue);
         },
+
+        getIsCouponChanged: function () {
+            return isCouponChanged;
+        },
+
+        setIsCouponChanged: function (isCouponChangedValue) {
+            isCouponChanged(isCouponChangedValue);
+        },
+
+        getCouponListType: function () {
+            return couponListType;
+        },
+
+        setCouponListType: function (couponListTypeValue) {
+            couponListType(couponListTypeValue);
+        },
         
         setCouponCodes: function (coupons) {
             couponCodes(coupons);
         },
-
-        /**
-         * @param {Boolean} isCouponAppliedValue
-         */
-        setIsCouponApplied: function (isCouponAppliedValue) {
-            isCouponApplied(isCouponAppliedValue);
-        },
-        getCouponCode: function (flag = false) {
+        getCouponCode: function () {
             var self = this;
             var ajaxurl = url.build('couponcode/index/index');
             jQuery.ajax({
@@ -67,14 +69,13 @@ define([
                         var isEnable = response.is_module_enable;
                         self.setIsModuleEnable(isEnable);
                     }
-                    if (response.couponcodes && response.couponcodes.length) {
-                        var codes = response.couponcodes;
-                        var isEnable = response.is_module_enable;
+                    if (response.coupon_list_type) {
+                        self.setCouponListType(parseInt(response.coupon_list_type));
+                    }
+                    if (response.couponcodes) {
                         self.setCouponCodes(codes);
-                        self.setIsModuleEnable(isEnable);
-                        if(flag){
-                            self.setIsCouponApplied(true);
-                        }
+                        var codes = response.couponcodes;
+                        self.setCouponCodes(codes);
                     }
                 }
             });

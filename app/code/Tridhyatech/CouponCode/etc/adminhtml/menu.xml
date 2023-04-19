@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Tridhyatech_CouponCode::couponcode" title="Auto Apply Coupon" module="Tridhyatech_CouponCode" sortOrder="99" parent="Tridhyatech_Core::view" action="adminhtml/system_config/edit/section/coupon_code_config" resource="Tridhyatech_CouponCode::couponcode"/>
+    </menu>
+</config>

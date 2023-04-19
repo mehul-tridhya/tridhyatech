@@ -14,5 +14,5 @@ interface ConfigProviderInterface
      *
      * @return array
      */
-    public function getCouponCodes();
+    public function getCouponCodesWithDetails();
 }

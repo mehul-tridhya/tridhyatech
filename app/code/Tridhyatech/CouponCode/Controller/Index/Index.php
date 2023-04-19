@@ -16,6 +16,7 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $_scopeConfig;
 
     const XML_PATH_COUPON_CODE = 'coupon_code_config/coupon_list/is_active';
+    const XML_PATH_COUPON_CODE_LIST = 'coupon_code_config/coupon_list/type';
     const SCOPE_STORE = ScopeInterface::SCOPE_STORE;
 
     public function __construct(
@@ -34,11 +35,17 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         $resultJson = $this->_resultJsonFactory->create();
         $isModuleEnable = $this->isModuleEnable();
-        return $resultJson->setData(['couponcodes' => $this->_configProvider->getCouponCodes(),'is_module_enable' => $isModuleEnable]);
+        $couponListType = $this->getCouponListType();
+        return $resultJson->setData(['couponcodes' => $this->_configProvider->getCouponCodesWithDetails(),'is_module_enable' => $isModuleEnable,'coupon_list_type' => $couponListType]);
     }
 
     public function isModuleEnable()
     {
         return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE, self::SCOPE_STORE) ? true : false ;
+    }
+
+    public function getCouponListType()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE_LIST, self::SCOPE_STORE);
     }
 }

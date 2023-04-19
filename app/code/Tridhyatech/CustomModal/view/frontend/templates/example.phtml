@@ -1,0 +1,40 @@
+<div id="modal-content">
+    <?php echo $block->getContent(); ?>
+</div>
+<button id="example-modal-button" data-mage-init='{"example-modal": {"target": "#modal-content"}}'>
+    Open Modal
+</button>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Example Modal',
+                buttons: [{
+                    text: $.mage.__('OK'),
+                    class: '',
+                    click: function() {
+                        this.closeModal();
+                    }
+                },{
+                    text: $.mage.__('New'),
+                    class: '',
+                    click: function() {
+                        alert(1);
+                    }
+                }]
+            };
+            var popup = modal(options, $('#modal-content'));
+            $('#modal-content').modal('openModal');
+        }
+    );
+</script>

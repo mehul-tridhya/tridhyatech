@@ -13,6 +13,8 @@ use Magento\SalesRule\Model\RuleFactory;
 use Magento\SalesRule\Model\Quote\ChildrenValidationLocator;
 use Magento\Customer\Model\Session;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -24,6 +26,10 @@ class ConfigProvider implements ConfigProviderInterface
     protected $_childrenValidationLocator;
     protected $_customerSession;
     protected $_storeManager;
+    protected $_scopeConfig;
+
+    const XML_PATH_COUPON_CODE_LIST = 'coupon_code_config/coupon_list/type';
+    const SCOPE_STORE = ScopeInterface::SCOPE_STORE;
 
     public function __construct(
         CouponFactory $couponFactory,
@@ -33,7 +39,8 @@ class ConfigProvider implements ConfigProviderInterface
         Utility $utility,
         ChildrenValidationLocator $childrenValidationLocator,
         Session $customerSession,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig,
     ) {
         $this->_couponFactory = $couponFactory;
         $this->_logger = $logger;
@@ -43,23 +50,30 @@ class ConfigProvider implements ConfigProviderInterface
         $this->_childrenValidationLocator = $childrenValidationLocator;
         $this->_customerSession = $customerSession;
         $this->_storeManager = $storeManager;
+        $this->_scopeConfig = $scopeConfig;
     }
 
-    public function getCouponCodes()
+    public function getCouponListType()
     {
-        $validCouponCodes = [];
-        $appliedRuleIds = [];
+        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE_LIST, self::SCOPE_STORE) ;
+    }
+
+    public function getCouponCodesWithDetails()
+    {
+        $validCouponCodes = $allCoupons = $invalidCouponCodes = [];
         $coupons = $this->_couponFactory->create()->getCollection()->getData();
         $customer = $this->_customerSession->getCustomer();
         $websiteId = $this->_storeManager->getStore()->getWebsiteId();
         if ($this->_cart->getItemsCount() != 0) {
             $allItems = $this->_cart->getQuote()->getAllItems();
             foreach ($coupons as $coupon) {
+                $isValidCoupon = true;
                 $salesRule = null;
                 try {
                     $salesRule = $this->_ruleRepository->create()->load($coupon['rule_id']);
+                    $allCoupons[] = $salesRule->getCouponCode();
                     if (!$salesRule->getIsActive()) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     $today = strtotime(date("Y-m-d"));
                     $startDay = $salesRule->getFromDate();
@@ -69,37 +83,37 @@ class ConfigProvider implements ConfigProviderInterface
                     $maxUses = $coupon['usage_limit'];
                     // Discount code is expired
                     if ($expirationDay && strtotime($expirationDay) < $today) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     // Discount hasn't started yet
                     else if ($startDay && strtotime($startDay) > $today) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     // Coupon has already been fully consumed
                     else if ($maxUses && $numUses >= $maxUses) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     if ($websiteId && !in_array($websiteId, $salesRule->getWebsiteIds())) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && !$customer->getId()) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && $customer->getId()) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     if (!in_array(0, $salesRule->getCustomerGroupIds()) && $customer->getId() && !in_array($customer->getGroupId(), $salesRule->getCustomerGroupIds())) {
-                        continue;
+                        $isValidCoupon = false;
                     }
                     foreach ($allItems as $item) {
                         $address = $item->getAddress();
                         $isValid = $this->_validatorUtility->canProcessRule($salesRule, $address);
                         if (!$isValid) {
-                            continue;
+                            $isValidCoupon = false;
                         }
                         if (!$salesRule->getActions()->validate($item)) {
                             if (!$this->_childrenValidationLocator->isChildrenValidationRequired($item)) {
-                                continue;
+                                $isValidCoupon = false;
                             }
                             $childItems = $item->getChildren();
                             $isContinue = true;
@@ -111,14 +125,18 @@ class ConfigProvider implements ConfigProviderInterface
                                 }
                             }
                             if ($isContinue) {
-                                continue;
+                                $isValidCoupon = false;
                             }
                         }
-                        if (!in_array($coupon['code'], $validCouponCodes)) {
-                            $validCouponCodes[] = $coupon['code'];
-                        }
-                        if (!in_array($salesRule->getId(), $appliedRuleIds)) {
-                            $appliedRuleIds[] = $salesRule->getId();
+                        $rule = [
+                            'coupon_code' => $salesRule->getCouponCode(),
+                            'name' => $salesRule->getName(),
+                            'description' => $salesRule->getDescription(),
+                        ];
+                        if ($isValidCoupon && !in_array($rule, $validCouponCodes)) {
+                            $validCouponCodes[] = $rule;
+                        }elseif (!in_array($rule, $invalidCouponCodes)) {
+                            $invalidCouponCodes[] = $rule;
                         }
                     }
                 } catch (Exception $exception) {
@@ -126,6 +144,9 @@ class ConfigProvider implements ConfigProviderInterface
                 }
             }
         }
-        return $validCouponCodes;
+        return [
+            'valid_coupons' => $validCouponCodes,
+            'invalid_coupons' => $invalidCouponCodes
+        ];
     }
 }

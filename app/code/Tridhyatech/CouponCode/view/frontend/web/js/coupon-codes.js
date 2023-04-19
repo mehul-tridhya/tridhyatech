@@ -6,12 +6,25 @@
 define([
     'jquery',
     'mage/url',
-], function ($, url) {
+    'Magento_Ui/js/modal/modal'
+], function ($, url,modal) {
     'use strict';
     return {
-        applyCouponCode: function(obj){
-            $('#discount-coupon-form').find('#coupon_code').val($(obj).val());
+        applyCouponCode: function (code) {
+            $('#discount-coupon-form').find('#coupon_code').val(code);
             $('#discount-coupon-form').find('.apply').trigger('click');
         },
+        openCouponModal: function (title,elementId){
+            var options = {
+                type: 'slide',
+                responsive: true,
+                innerScroll: true,
+                modalClass: 'coupon-list-modal',
+                title: title,
+                buttons: []
+            };
+            var popup = modal(options, $(elementId));
+            $(elementId).modal("openModal");
+        }
     }
 });
