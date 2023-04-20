@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
     <menu>
-        <add id="Tridhyatech_Core::view" title="Tridhyatech Extension" module="Tridhyatech_Core" sortOrder="75" resource="Tridhyatech_Core::core"/>
+        <add id="Tridhyatech_Core::view" title="Tridhyatech Extension" module="Tridhyatech_Core" sortOrder="75" resource="Tridhyatech_Core::view"/>
     </menu>
 </config>
