@@ -1,4 +1,9 @@
 <?php
+/**
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponCode
+*/
 namespace Tridhyatech\CouponCode\Model\Config\Source;
 use Magento\Framework\Option\ArrayInterface;
 

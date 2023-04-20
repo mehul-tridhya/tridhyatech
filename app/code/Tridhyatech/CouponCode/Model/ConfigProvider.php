@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * @author Tridhya Tech Team
+ * @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+ * @package Tridhyatech_CouponCode
+ */
+
 namespace Tridhyatech\CouponCode\Model;
 
 use Magento\SalesRule\Model\CouponFactory;
 use Exception;
 use Psr\Log\LoggerInterface;
-use Magento\SalesRule\Api\Data\RuleInterface;
-use Magento\SalesRule\Api\RuleRepositoryInterface;
 use Magento\Checkout\Model\Cart;
 use Magento\SalesRule\Model\Utility;
 use Magento\SalesRule\Model\RuleFactory;
@@ -28,9 +32,27 @@ class ConfigProvider implements ConfigProviderInterface
     protected $_storeManager;
     protected $_scopeConfig;
 
+    const XML_PATH_COUPON_CODE = 'coupon_code_config/coupon_list/is_active';
+    const XML_PATH_BUTTON_TITLE = 'coupon_code_config/coupon_list/button_title';
+    const XML_PATH_AVAILABLE_COUPON_TITLE = 'coupon_code_config/coupon_list/availabe_coupon_title';
+    const XML_PATH_UNAVAILABLE_COUPON_TITLE = 'coupon_code_config/coupon_list/unavailable_coupon_title';
+    const XML_PATH_ALL_COUPON_TITLE = 'coupon_code_config/coupon_list/all_coupon_title';
+    const XML_PATH_CART_WISE_COUPON_TITLE = 'coupon_code_config/coupon_list/cart_wise_coupon_title';
     const XML_PATH_COUPON_CODE_LIST = 'coupon_code_config/coupon_list/type';
-    const SCOPE_STORE = ScopeInterface::SCOPE_STORE;
+    const SCOPE_STORE = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 
+    /**
+     *
+     * @param CouponFactory $couponFactory
+     * @param LoggerInterface $logger
+     * @param RuleFactory $ruleRepository
+     * @param Cart $cart
+     * @param Utility $utility
+     * @param ChildrenValidationLocator $childrenValidationLocator
+     * @param Session $customerSession
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
+     */
     public function __construct(
         CouponFactory $couponFactory,
         LoggerInterface $logger,
@@ -53,11 +75,91 @@ class ConfigProvider implements ConfigProviderInterface
         $this->_scopeConfig = $scopeConfig;
     }
 
+    /**
+     * get coupon list type
+     *
+     * @return void
+     */
     public function getCouponListType()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE_LIST, self::SCOPE_STORE) ;
+        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE_LIST, self::SCOPE_STORE);
     }
 
+    /**
+     * get is module enable
+     *
+     * @return boolean
+     */
+    public function isModuleEnable()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE, self::SCOPE_STORE);
+    }
+
+    /**
+     * get title for modal based on coupon list type
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->getCouponListType() == 1 ? 'All Coupons' : 'Available Coupons';
+    }
+
+    /**
+     * get Button Title
+     *
+     * @return string
+     */
+    public function getButtonTitle()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_BUTTON_TITLE, self::SCOPE_STORE);
+    }
+
+    /**
+     * get Title For Available coupons
+     *
+     * @return string
+     */
+    public function getAvailableCouponTitle()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_AVAILABLE_COUPON_TITLE, self::SCOPE_STORE);
+    }
+
+    /**
+     * get Title For Unavailable coupons
+     *
+     * @return string
+     */
+    public function getUnavailableCouponTitle()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_UNAVAILABLE_COUPON_TITLE, self::SCOPE_STORE);
+    }
+
+    /**
+     * get Title For All Coupons
+     *
+     * @return string
+     */
+    public function getAllCouponTitle()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_ALL_COUPON_TITLE, self::SCOPE_STORE);
+    }
+
+    /**
+     * get Title For Cart Wise Availabe Coupons
+     *
+     * @return string
+     */
+    public function getCartWiseCouponTitle()
+    {
+        return $this->_scopeConfig->getValue(self::XML_PATH_CART_WISE_COUPON_TITLE, self::SCOPE_STORE);
+    }
+
+    /**
+     * get available and unavailable coupon codes array
+     *
+     * @return array
+     */
     public function getCouponCodesWithDetails()
     {
         $validCouponCodes = $allCoupons = $invalidCouponCodes = [];
@@ -135,7 +237,7 @@ class ConfigProvider implements ConfigProviderInterface
                         ];
                         if ($isValidCoupon && !in_array($rule, $validCouponCodes)) {
                             $validCouponCodes[] = $rule;
-                        }elseif (!in_array($rule, $invalidCouponCodes)) {
+                        } elseif (!in_array($rule, $invalidCouponCodes)) {
                             $invalidCouponCodes[] = $rule;
                         }
                     }

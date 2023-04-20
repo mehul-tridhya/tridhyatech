@@ -1,16 +1,19 @@
 <?php
-
+/**
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponCode
+*/
 namespace Tridhyatech\CouponCode\Model;
 
 /**
  * Interface ConfigProviderInterface
- * @api
  */
 interface ConfigProviderInterface
 {
 
     /**
-     * Retrieve assoc array of checkout configuration
+     * Retrieve array of all coupon codes
      *
      * @return array
      */

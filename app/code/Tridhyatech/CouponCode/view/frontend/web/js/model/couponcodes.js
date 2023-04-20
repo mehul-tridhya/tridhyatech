@@ -1,9 +1,10 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponCode
+*/
 /**
- * Coupon model.
+ * Coupon Code model.
  */
 define([
     'ko',
@@ -16,9 +17,17 @@ define([
     var couponCodes = ko.observableArray(null),
         isModuleEnable = ko.observable(false),
         couponListType = ko.observable(1),
-        isCouponChanged = ko.observable(false);
+        isCouponChanged = ko.observable(false),
+        title = ko.observable(''),
+        buttonTitle = ko.observable(''),
+        availableCouponTitle = ko.observable(''),
+        unavailableCouponTitle = ko.observable('');
     return {
         couponCodes: couponCodes,
+        title: title,
+        buttonTitle: buttonTitle,
+        availableCouponTitle: availableCouponTitle,
+        unavailableCouponTitle: unavailableCouponTitle,
 
         /**
          * @return {*}
@@ -71,6 +80,18 @@ define([
                     }
                     if (response.coupon_list_type) {
                         self.setCouponListType(parseInt(response.coupon_list_type));
+                    }
+                    if (response.title) {
+                        self.title(response.title);
+                    }
+                    if (response.button_title) {
+                        self.buttonTitle(response.button_title);
+                    }
+                    if (response.available_coupon_title) {
+                        self.availableCouponTitle(response.available_coupon_title);
+                    }
+                    if (response.unavailable_coupon_title) {
+                        self.unavailableCouponTitle(response.unavailable_coupon_title);
                     }
                     if (response.couponcodes) {
                         self.setCouponCodes(codes);

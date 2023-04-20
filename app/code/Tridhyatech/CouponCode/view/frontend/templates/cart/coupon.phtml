@@ -1,15 +1,10 @@
 <?php
 
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
-// phpcs:disable Generic.Files.LineLength.TooLong
-
-/**
- * @var \Magento\Framework\View\Element\AbstractBlock $block
- */
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponCode
+*/
 
 // We should use strlen function because coupon code could be "0", converted to bool will lead to false
 $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCode()) > 0;
@@ -20,6 +15,9 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
 <?php $invalidCoupons = $couponCodes['invalid_coupons']; ?>
 <?php $isModuleEnable = $childBlock->isModuleEnable(); ?>
 <?php $couponListType = $childBlock->getCouponListType(); ?>
+<?php $availableCouponTitle = $childBlock->getAvailableCouponTitle(); ?>
+<?php $unAvailableCouponTitle = $childBlock->getUnavailableCouponTitle(); ?>
+<?php $buttonTitle = $childBlock->getButtonTitle(); ?>
 <?php if (!$isModuleEnable) : ?>
     <div class="block discount" id="block-discount" data-mage-init='{"collapsible":{"active": <?= $hasCouponCode ? 'true' : 'false' ?>, "openedState": "active", "saveState": false}}'>
     <?php endif; ?>
@@ -69,7 +67,7 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
                     <div>
                         <?php if ($couponListType == '1') : ?>
                             <div class="coupon-code-types-div">
-                                <span class="coupon-code-types">Available Coupons</span>
+                                <span class="coupon-code-types"><?= $block->escapeHtml(__($availableCouponTitle)) ?></span>
                             </div>
                         <?php endif; ?>
                         <?php foreach ($validCoupons as $coupon) : ?>
@@ -86,7 +84,7 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
                     <?php if ($couponListType == 1) : ?>
                         <div>
                             <div class="coupon-code-types-div">
-                                <span class="coupon-code-types">Unavailable Coupons</span>
+                                <span class="coupon-code-types"><?= $block->escapeHtml(__($unAvailableCouponTitle)) ?></span>
                             </div>
                             <?php foreach ($invalidCoupons as $coupon) : ?>
                                 <div class="coupon-code-main">
@@ -104,7 +102,7 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
 
             </div>
             <div>
-                <a href="#" id="view_coupon_list" onclick="coupon.openCouponModal('<?= $childBlock->getTitle(); ?>','#coupon-list-content')">View Coupon List</a>
+                <a href="#" id="view_coupon_list" onclick="coupon.openCouponModal('<?= $childBlock->getTitle(); ?>','#coupon-list-content')"><?= $block->escapeHtml(__($buttonTitle)) ?></a>
             </div>
         <?php endif; ?>
         <?php if (!$isModuleEnable) : ?>

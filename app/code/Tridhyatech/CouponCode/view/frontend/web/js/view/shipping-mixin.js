@@ -1,11 +1,15 @@
-/*global define*/
+/**
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponCode
+*/
 define(
     [
         "jquery",
         'ko',
         'mage/url',
         'Tridhyatech_CouponCode/js/model/couponcodes'
-    ], //defile more js here
+    ],
     function (
         $,
         ko,
@@ -16,8 +20,8 @@ define(
         var mixins = {
             couponcodes: couponcodesmodel.getCouponCodes(),
             isCouponChanged: couponcodesmodel.getIsCouponChanged(),
-            setShippingInformation: function () { //Define new content for getTotal() function
-                var _return = this._super(arguments); //Call default quote get Totals function.
+            setShippingInformation: function () {
+                var _return = this._super(arguments);
                 this.getCouponCode();
                 return _return;
             },

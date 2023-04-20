@@ -1,7 +1,8 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponCode
+*/
 
 define([
     'jquery',
@@ -21,6 +22,10 @@ define([
     var isModuleEnable = couponcodesmodel.getIsModuleEnable();
     var couponListType = couponcodesmodel.getCouponListType();
     var isCouponChanged = couponcodesmodel.getIsCouponChanged();
+    var title = couponcodesmodel.title;
+    var buttonTitle = couponcodesmodel.buttonTitle;
+    var availableCouponTitle = couponcodesmodel.availableCouponTitle;
+    var unavailableCouponTitle = couponcodesmodel.unavailableCouponTitle;
     isCouponChanged.subscribe(function(newValue) {
         if(newValue){
             couponcodesmodel.getCouponCode();
@@ -35,6 +40,10 @@ define([
             couponcodes: couponCodes,
             isModuleEnable : isModuleEnable,
             couponListType : couponListType,
+            title: title,
+            buttonTitle:buttonTitle,
+            availableCouponTitle :availableCouponTitle,
+            unavailableCouponTitle :unavailableCouponTitle,
             initialize: function () {
                 var self = this;
                 this._super();
@@ -45,7 +54,7 @@ define([
                 $(elementId).modal("closeModal");
             },
             openCouponModal: function (elementId) {
-                var title = this.couponListType() == 1 ? 'All Coupons' : 'Available Coupons'; 
+                var title = this.title(); 
                 var options = {
                     type: 'slide',
                     responsive: true,
