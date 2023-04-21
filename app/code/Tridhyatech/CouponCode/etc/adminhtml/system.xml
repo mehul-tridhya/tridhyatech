@@ -12,7 +12,7 @@
             <class>separator-top</class>
             <label>Auto Apply Coupon</label>
             <tab>tridhyatech</tab>
-            <resource>Tridhyatech_CouponCode::couponconfig</resource>
+            <resource>Tridhyatech_CouponCode::couponcode</resource>
             <group id="coupon_list" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1">
                 <label>Settings</label>
                 <field id="is_active" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" canRestore="1">

@@ -9,5 +9,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Tridhyatech_CouponCode::couponcode" title="Auto Apply Coupon" module="Tridhyatech_CouponCode" sortOrder="99" parent="Tridhyatech_Core::view" action="adminhtml/system_config/edit/section/coupon_code_config" resource="Tridhyatech_CouponCode::couponcode"/>
+        <add id="Vendor_Module::jsutariya" title="Grand Parent" module="Vendor_Module" sortOrder="100" resource="Vendor_Module::jsutariya" />
+        <add id="Vendor_Module::jsutariya_listgallery" title="Parent" module="Vendor_Module" sortOrder="10" resource="Vendor_Module::listgallery" parent="Vendor_Module::jsutariya" />
+        <add id="Vendor_Module::jsutariya_settings" title="Child" module="Vendor_Module" sortOrder="40" action="adminhtml/system_config/edit/section/list_gallery" resource="Vendor_Module::settings" parent="Vendor_Module::jsutariya_listgallery"/>
+        <add id="Vendor_Module::jsutariya_listgallery1" title="Another Parent" module="Vendor_Module" sortOrder="20" resource="Vendor_Module::listgallery" parent="Vendor_Module::jsutariya" />
+    </menu>
+    <menu>
+        
     </menu>
 </config>
