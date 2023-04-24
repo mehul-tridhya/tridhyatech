@@ -3,7 +3,7 @@
 * @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
 * @package Tridhyatech_CouponsList
 */ -->
-<!-- ko ifnot: isModuleEnable -->
+<!-- ko if: (isModuleEnable() == 0) -->
 <div class="payment-option _collapsible opc-payment-additional discount-code"
     data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
     <div class="payment-option-title field choice" data-role="title">
@@ -50,7 +50,7 @@
     </div>
 </div>
 <!--/ko-->
-<!-- ko if: isModuleEnable -->
+<!-- ko if: (isModuleEnable() == 1) -->
 <div class="payment-option-content" data-role="content">
     <!-- ko foreach: getRegion('messages') -->
     <!-- ko template: getTemplate() --><!-- /ko -->
