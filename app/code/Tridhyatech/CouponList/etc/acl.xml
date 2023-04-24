@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+* @author Tridhya Tech Team
+* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+* @package Tridhyatech_CouponList
+*/ 
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+   <acl>
+     <resources>
+        <resource id="Magento_Backend::admin">
+           <resource id="Tridhyatech_Core::view" title="Tridhyatech Extension" sortOrder="10" >
+              <resource id="Tridhyatech_CouponList::couponcode" title="Auto Apply Coupon" sortOrder="50" />
+           </resource>
+        </resource>
+     </resources>
+   </acl>
+</config>
