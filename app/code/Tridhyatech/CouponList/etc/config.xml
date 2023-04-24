@@ -12,7 +12,7 @@
            <coupon_list>
                <is_active>0</is_active>
                <type>1</type>
-               <button_title>View Coupon List</button_title>
+               <button_title>View Coupons</button_title>
                <availabe_coupon_title>Available Coupons</availabe_coupon_title>
                <unavailable_coupon_title>Unavailable Coupons</unavailable_coupon_title>
                <all_coupon_title>All Coupons</all_coupon_title>
