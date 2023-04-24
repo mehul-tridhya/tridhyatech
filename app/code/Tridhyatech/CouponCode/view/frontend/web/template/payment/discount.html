@@ -24,7 +24,7 @@
                     <div class="control">
                         <input class="input-text" type="text" id="discount-code" name="discount_code"
                             data-validate="{'required-entry':true}"
-                            data-bind="value: couponCode, attr:{disabled:isApplied() , placeholder: $t('Enter discount code')} " />
+                            data-bind="value: couponCode, attr:{disabled:isApplied() , placeholder: $t('Enter discount code')} "></input>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <div class="control">
                     <input class="input-text" type="text" id="discount-code" name="discount_code"
                         data-validate="{'required-entry':true}"
-                        data-bind="value: couponCode, attr:{disabled:isApplied() , placeholder: $t('Enter discount code')} " />
+                        data-bind="value: couponCode, attr:{disabled:isApplied() , placeholder: $t('Enter discount code')} " ></input>
                 </div>
             </div>
         </div>
@@ -98,7 +98,9 @@
                 <div data-bind="foreach: { data: coupons.valid_coupons, as: 'coupon', noChildContext: true }">
                     <div class="coupon-code-main">
                         <div class="coupon-code"><span><!-- ko i18n: coupon.coupon_code--><!-- /ko --></span></div>
-                        <span class="coupon-name"><h4><!-- ko i18n: coupon.name--><!-- /ko --></h4></span>
+                        <span class="coupon-name">
+                            <h4><!-- ko i18n: coupon.name--><!-- /ko --></h4>
+                        </span>
                         <p class="coupon-description"><!-- ko i18n: coupon.description--><!-- /ko --></p>
                         <button type="button" class="action secondory coupon-code-apply-btn" tabindex="0"
                             data-bind="event:{ click: function(data, event) { applyCuponCode(coupon.coupon_code,'#coupon-list-content') }}">
@@ -117,7 +119,9 @@
                     <div data-bind="foreach: { data: coupons.invalid_coupons, as: 'coupon' }">
                         <div class="coupon-code-main">
                             <div class="coupon-code"><span><!-- ko i18n: coupon.coupon_code--><!-- /ko --></span></div>
-                            <span class="coupon-name"><h4><!-- ko i18n: coupon.name--><!-- /ko --></h4></span>
+                            <span class="coupon-name">
+                                <h4><!-- ko i18n: coupon.name--><!-- /ko --></h4>
+                            </span>
                             <p class="coupon-description"><!-- ko i18n: coupon.description--><!-- /ko --></p>
                             <button type="button" class="action secondory disabled coupon-code-apply-btn" tabindex="0"
                                 data-bind="event:{ click: function(data, event) { applyCuponCode(coupon.coupon_code,'#coupon-list-content') }}">

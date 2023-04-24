@@ -1,27 +1,44 @@
 <?php
+
 /**
-* @author Tridhya Tech Team
-* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
-* @package Tridhyatech_CouponCode
-*/
+ * Coupon Code Provider
+ * @author    Tridhya Tech Team
+ * @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+ * @package   Tridhyatech_CouponCode
+ */
+
 namespace Tridhyatech\CouponCode\Block;
 
 use Tridhyatech\CouponCode\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
+/**
+ * Class Coupon Provider
+ */
 class Coupon extends \Magento\Framework\View\Element\Template
 {
 
+    /**
+     * Config Provider Variable
+     *
+     * @var Tridhyatech\CouponCode\Model\ConfigProvider
+     */
     protected $_configProvider;
+
+    /**
+     * Scope Config Provider
+     *
+     * @var Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $_scopeConfig;
-    
+
     /**
      *
-     * @param Context $context
-     * @param ConfigProvider $configProvider
+     * @param Context              $context
+     * @param ConfigProvider       $configProvider
      * @param ScopeConfigInterface $scopeConfig
-     * @param array $data
+     * @param array                $data
      */
     public function __construct(
         Context $context,
@@ -33,9 +50,9 @@ class Coupon extends \Magento\Framework\View\Element\Template
         $this->_configProvider = $configProvider;
         $this->_scopeConfig = $scopeConfig;
     }
-    
+
     /**
-     * get coupon codes
+     * Get coupon codes
      *
      * @return void
      */
@@ -45,7 +62,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get is module enable
+     * Get is module enable
      *
      * @return boolean
      */
@@ -55,7 +72,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get coupon list type
+     * Get coupon list type
      *
      * @return boolean
      */
@@ -65,7 +82,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get title for modal based on coupon list type
+     * Get title for modal based on coupon list type
      *
      * @return string
      */
@@ -75,7 +92,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Button Title
+     * Get Button Title
      *
      * @return string
      */
@@ -85,7 +102,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Title For Available coupons
+     * Get Title For Available coupons
      *
      * @return string
      */
@@ -95,7 +112,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Title For Unavailable coupons
+     * Get Title For Unavailable coupons
      *
      * @return string
      */
@@ -105,7 +122,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Title For All Coupons
+     * Get Title For All Coupons
      *
      * @return string
      */
@@ -115,7 +132,7 @@ class Coupon extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Title For Cart Wise Availabe Coupons
+     * Get Title For Cart Wise Availabe Coupons
      *
      * @return string
      */

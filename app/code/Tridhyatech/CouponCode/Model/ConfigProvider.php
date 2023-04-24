@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @author Tridhya Tech Team
+ * @author    Tridhya Tech Team
  * @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
- * @package Tridhyatech_CouponCode
+ * @package   Tridhyatech_CouponCode
  */
 
 namespace Tridhyatech\CouponCode\Model;
@@ -18,40 +18,74 @@ use Magento\SalesRule\Model\Quote\ChildrenValidationLocator;
 use Magento\Customer\Model\Session;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
 
 class ConfigProvider implements ConfigProviderInterface
 {
+    /**
+     * @var Magento\SalesRule\Model\CouponFactory
+     */
     protected $_couponFactory;
+
+    /**
+     * @var Psr\Log\LoggerInterface
+     */
     protected $_logger;
+
+    /**
+     * @var Magento\SalesRule\Model\RuleFactory
+     */
     protected $_ruleRepository;
+
+    /**
+     * @var Magento\Checkout\Model\Cart
+     */
     protected $_cart;
+
+    /**
+     * @var Magento\SalesRule\Model\Utility
+     */
     protected $_validatorUtility;
+
+    /**
+     * @var Magento\SalesRule\Model\Quote\ChildrenValidationLocator
+     */
     protected $_childrenValidationLocator;
+
+    /**
+     * @var Magento\Customer\Model\Session
+     */
     protected $_customerSession;
+
+    /**
+     * @var Magento\Store\Model\StoreManagerInterface
+     */
     protected $_storeManager;
+
+    /**
+     * @var Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $_scopeConfig;
 
-    const XML_PATH_COUPON_CODE = 'coupon_code_config/coupon_list/is_active';
-    const XML_PATH_BUTTON_TITLE = 'coupon_code_config/coupon_list/button_title';
-    const XML_PATH_AVAILABLE_COUPON_TITLE = 'coupon_code_config/coupon_list/availabe_coupon_title';
-    const XML_PATH_UNAVAILABLE_COUPON_TITLE = 'coupon_code_config/coupon_list/unavailable_coupon_title';
-    const XML_PATH_ALL_COUPON_TITLE = 'coupon_code_config/coupon_list/all_coupon_title';
-    const XML_PATH_CART_WISE_COUPON_TITLE = 'coupon_code_config/coupon_list/cart_wise_coupon_title';
-    const XML_PATH_COUPON_CODE_LIST = 'coupon_code_config/coupon_list/type';
-    const SCOPE_STORE = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+    public const XML_PATH_COUPON_CODE = 'coupon_code_config/coupon_list/is_active';
+    public const XML_PATH_BUTTON_TITLE = 'coupon_code_config/coupon_list/button_title';
+    public const XML_PATH_AVAILABLE_COUPON_TITLE = 'coupon_code_config/coupon_list/availabe_coupon_title';
+    public const XML_PATH_UNAVAILABLE_COUPON_TITLE = 'coupon_code_config/coupon_list/unavailable_coupon_title';
+    public const XML_PATH_ALL_COUPON_TITLE = 'coupon_code_config/coupon_list/all_coupon_title';
+    public const XML_PATH_CART_WISE_COUPON_TITLE = 'coupon_code_config/coupon_list/cart_wise_coupon_title';
+    public const XML_PATH_COUPON_CODE_LIST = 'coupon_code_config/coupon_list/type';
+    public const SCOPE_STORE = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 
     /**
      *
-     * @param CouponFactory $couponFactory
-     * @param LoggerInterface $logger
-     * @param RuleFactory $ruleRepository
-     * @param Cart $cart
-     * @param Utility $utility
+     * @param CouponFactory             $couponFactory
+     * @param LoggerInterface           $logger
+     * @param RuleFactory               $ruleRepository
+     * @param Cart                      $cart
+     * @param Utility                   $utility
      * @param ChildrenValidationLocator $childrenValidationLocator
-     * @param Session $customerSession
-     * @param StoreManagerInterface $storeManager
-     * @param ScopeConfigInterface $scopeConfig
+     * @param Session                   $customerSession
+     * @param StoreManagerInterface     $storeManager
+     * @param ScopeConfigInterface      $scopeConfig
      */
     public function __construct(
         CouponFactory $couponFactory,
@@ -76,7 +110,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get coupon list type
+     * Get coupon list type
      *
      * @return void
      */
@@ -86,7 +120,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get is module enable
+     * Get is module enable
      *
      * @return boolean
      */
@@ -96,7 +130,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get title for modal based on coupon list type
+     * Get title for modal based on coupon list type
      *
      * @return string
      */
@@ -106,7 +140,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get Button Title
+     * Get Button Title
      *
      * @return string
      */
@@ -116,7 +150,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get Title For Available coupons
+     * Get Title For Available coupons
      *
      * @return string
      */
@@ -126,7 +160,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get Title For Unavailable coupons
+     * Get Title For Unavailable coupons
      *
      * @return string
      */
@@ -136,7 +170,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get Title For All Coupons
+     * Get Title For All Coupons
      *
      * @return string
      */
@@ -146,7 +180,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get Title For Cart Wise Availabe Coupons
+     * Get Title For Cart Wise Availabe Coupons
      *
      * @return string
      */
@@ -156,7 +190,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * get available and unavailable coupon codes array
+     * Get available and unavailable coupon codes array
      *
      * @return array
      */
@@ -186,13 +220,9 @@ class ConfigProvider implements ConfigProviderInterface
                     // Discount code is expired
                     if ($expirationDay && strtotime($expirationDay) < $today) {
                         $isValidCoupon = false;
-                    }
-                    // Discount hasn't started yet
-                    else if ($startDay && strtotime($startDay) > $today) {
+                    } elseif ($startDay && strtotime($startDay) > $today) {
                         $isValidCoupon = false;
-                    }
-                    // Coupon has already been fully consumed
-                    else if ($maxUses && $numUses >= $maxUses) {
+                    } elseif ($maxUses && $numUses >= $maxUses) {
                         $isValidCoupon = false;
                     }
                     if ($websiteId && !in_array($websiteId, $salesRule->getWebsiteIds())) {
@@ -208,28 +238,7 @@ class ConfigProvider implements ConfigProviderInterface
                         $isValidCoupon = false;
                     }
                     foreach ($allItems as $item) {
-                        $address = $item->getAddress();
-                        $isValid = $this->_validatorUtility->canProcessRule($salesRule, $address);
-                        if (!$isValid) {
-                            $isValidCoupon = false;
-                        }
-                        if (!$salesRule->getActions()->validate($item)) {
-                            if (!$this->_childrenValidationLocator->isChildrenValidationRequired($item)) {
-                                $isValidCoupon = false;
-                            }
-                            $childItems = $item->getChildren();
-                            $isContinue = true;
-                            if (!empty($childItems)) {
-                                foreach ($childItems as $childItem) {
-                                    if ($salesRule->getActions()->validate($childItem)) {
-                                        $isContinue = false;
-                                    }
-                                }
-                            }
-                            if ($isContinue) {
-                                $isValidCoupon = false;
-                            }
-                        }
+                        $isValidCoupon = $this->checkIsCouponValidForItem($item, $salesRule);
                         $rule = [
                             'coupon_code' => $salesRule->getCouponCode(),
                             'name' => $salesRule->getName(),
@@ -250,5 +259,39 @@ class ConfigProvider implements ConfigProviderInterface
             'valid_coupons' => $validCouponCodes,
             'invalid_coupons' => $invalidCouponCodes
         ];
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param  Magento\Quote\Model\Quote\Item\AbstractItem $item
+     * @param  Magento\SalesRule\Model\RuleFactory $salesRule
+     * @return boolean
+     */
+    public function checkIsCouponValidForItem($item, $salesRule)
+    {
+        $address = $item->getAddress();
+        $isValid = $this->_validatorUtility->canProcessRule($salesRule, $address);
+        if (!$isValid) {
+            return false;
+        }
+        if (!$salesRule->getActions()->validate($item)) {
+            if (!$this->_childrenValidationLocator->isChildrenValidationRequired($item)) {
+                return false;
+            }
+            $childItems = $item->getChildren();
+            $isContinue = true;
+            if (!empty($childItems)) {
+                foreach ($childItems as $childItem) {
+                    if ($salesRule->getActions()->validate($childItem)) {
+                        $isContinue = false;
+                    }
+                }
+            }
+            if ($isContinue) {
+                return false;
+            }
+        }
+        return true;
     }
 }

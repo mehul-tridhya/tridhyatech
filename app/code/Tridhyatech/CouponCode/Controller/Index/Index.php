@@ -1,30 +1,45 @@
 <?php
 /**
-* @author Tridhya Tech Team
-* @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
-* @package Tridhyatech_CouponCode
-*/
+ * @author    Tridhya Tech Team
+ * @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
+ * @package   Tridhyatech_CouponCode
+ */
 namespace Tridhyatech\CouponCode\Controller\Index;
 
 use Tridhyatech\CouponCode\Model\ConfigProvider;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
-use Zend_Json;
 
+/**
+ * Index Controller to get All coupons
+ */
 class Index extends \Magento\Framework\App\Action\Action
 {
+    /**
+     *
+     * @var Tridhyatech\CouponCode\Model\ConfigProvider
+     */
     protected $_configProvider;
+
+    /**
+     *
+     * @var Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $_resultJsonFactory;
+
+    /**
+     *
+     * @var Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $_scopeConfig;
 
     /**
      * Undocumented function
      *
-     * @param Context $context
-     * @param ConfigProvider $configProvider
-     * @param JsonFactory $resultJsonFactory
+     * @param Context              $context
+     * @param ConfigProvider       $configProvider
+     * @param JsonFactory          $resultJsonFactory
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
@@ -39,6 +54,11 @@ class Index extends \Magento\Framework\App\Action\Action
         return parent::__construct($context);
     }
 
+    /**
+     * Execute
+     *
+     * @return void
+     */
     public function execute()
     {
         $resultJson = $this->_resultJsonFactory->create();
@@ -61,7 +81,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get title for modal based on coupon list type
+     * Get title for modal based on coupon list type
      *
      * @return string
      */
@@ -71,7 +91,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get module is module enable
+     * Get module is module enable
      *
      * @return boolean
      */
@@ -81,7 +101,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get coupon list type
+     * Get coupon list type
      *
      * @return void
      */
@@ -89,10 +109,9 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         return $this->_configProvider->getCouponListType();
     }
-
     
     /**
-     * get Button Title
+     * Get Button Title
      *
      * @return string
      */
@@ -102,7 +121,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get Title For Available coupons
+     * Get Title For Available coupons
      *
      * @return string
      */
@@ -112,7 +131,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get Title For Unavailable coupons
+     * Get Title For Unavailable coupons
      *
      * @return string
      */
@@ -122,7 +141,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get Title For All Coupons
+     * Get Title For All Coupons
      *
      * @return string
      */
@@ -132,7 +151,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * get Title For Cart Wise Availabe Coupons
+     * Get Title For Cart Wise Availabe Coupons
      *
      * @return string
      */

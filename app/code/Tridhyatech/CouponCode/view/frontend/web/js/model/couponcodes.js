@@ -11,7 +11,7 @@ define([
     'domReady!',
     'mage/url',
     'jQuery'
-], function (ko,domReady,url,$) {
+], function (ko, domReady, url, $) {
     'use strict';
 
     var couponCodes = ko.observableArray(null),
@@ -59,7 +59,7 @@ define([
         setCouponListType: function (couponListTypeValue) {
             couponListType(couponListTypeValue);
         },
-        
+
         setCouponCodes: function (coupons) {
             couponCodes(coupons);
         },
