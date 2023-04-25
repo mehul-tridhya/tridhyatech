@@ -8,12 +8,19 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
    <acl>
-     <resources>
-        <resource id="Magento_Backend::admin">
-           <resource id="Tridhyatech_Core::view" title="Tridhyatech Extension" sortOrder="10" >
-              <resource id="Tridhyatech_CouponsList::couponslist" title="Auto Apply Coupon" sortOrder="50" />
-           </resource>
-        </resource>
-     </resources>
+      <resources>
+         <resource id="Magento_Backend::admin">
+            <resource id="Tridhyatech_Core::tridhyatech_menu" title="Tridhyatech Extensions" translate="title" sortOrder="79">
+               <resource id="Tridhyatech_CouponsList::tridhyatech_couponslist" title="Coupon" sortOrder="50" />
+            </resource>
+            <resource id="Magento_Backend::stores">
+               <resource id="Magento_Backend::stores_settings">
+                  <resource id="Magento_Config::config">
+                     <resource id="Tridhyatech_CouponsList::couponslist" title="Coupon" sortOrder="50" />
+                  </resource>
+               </resource>
+            </resource>
+         </resource>
+      </resources>
    </acl>
 </config>

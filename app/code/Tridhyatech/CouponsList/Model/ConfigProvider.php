@@ -233,6 +233,9 @@ class ConfigProvider
                     if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && !$customer->getId()) {
                         $isValidCoupon = false;
                     }
+                    if (!in_array(0, $salesRule->getCustomerGroupIds()) && !$customer->getId()) {
+                        $isValidCoupon = false;
+                    }
                     if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && $customer->getId()) {
                         $isValidCoupon = false;
                     }
