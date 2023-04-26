@@ -7,11 +7,12 @@
  * Coupon Code model.
  */
 define([
+    'jquery',
     'ko',
     'domReady!',
     'mage/url',
-    'jQuery'
-], function (ko, domReady, url, $) {
+    
+], function ($,ko, domReady, url) {
     'use strict';
 
     var couponCodes = ko.observableArray(null),
@@ -66,7 +67,7 @@ define([
         getCouponCode: function () {
             var self = this;
             var ajaxurl = url.build('couponcode/index/index');
-            jQuery.ajax({
+            $.ajax({
                 url: ajaxurl,
                 type: 'POST',
                 dataType: 'json',
