@@ -18,15 +18,11 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
 <?php $availableCouponTitle = $childBlock->getAvailableCouponTitle(); ?>
 <?php $unAvailableCouponTitle = $childBlock->getUnavailableCouponTitle(); ?>
 <?php $buttonTitle = $childBlock->getButtonTitle(); ?>
-<?php if (!$isModuleEnable) : ?>
     <div class="block discount" id="block-discount" data-mage-init='{"collapsible":{"active": <?php echo $hasCouponCode ? 'true' : 'false' ?>, "openedState": "active", "saveState": false}}'>
-<?php endif; ?>
-    <?php if (!$isModuleEnable) : ?>
         <div class="title" data-role="title">
             <strong id="block-discount-heading" role="heading" aria-level="2"><?php echo $block->escapeHtml(__('Apply Discount Code')) ?></strong>
         </div>
         <div class="content" data-role="content" aria-labelledby="block-discount-heading">
-    <?php endif; ?>
         <form id="discount-coupon-form" action="<?php echo $block->escapeUrl($block->getUrl('checkout/cart/couponPost')) ?>" method="post" data-mage-init='{"discountCode":{"couponCodeSelector": "#coupon_code",
                                                "removeCouponSelector": "#remove-coupon",
                                                "applyButton": "button.action.apply",
@@ -106,10 +102,8 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
                 <a href="#" id="view_coupon_list" onclick="coupon.openCouponModal('<?php echo $childBlock->getTitle(); ?>','#coupon-list-content')"><?php echo $block->escapeHtml(__($buttonTitle)) ?></a>
             </div>
         <?php endif; ?>
-        <?php if (!$isModuleEnable) : ?>
         </div>
     </div>
-        <?php endif; ?>
 <script>
     var coupon;
     require(['jquery', 'couponCode'], function($, couponCode) {

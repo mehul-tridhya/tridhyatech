@@ -251,7 +251,7 @@ class ConfigProvider
                         ];
                         if ($isValidCoupon && !in_array($rule, $validCouponCodes)) {
                             $validCouponCodes[] = $rule;
-                        } elseif (!in_array($rule, $invalidCouponCodes)) {
+                        } elseif (!in_array($rule, $validCouponCodes) && !in_array($rule, $invalidCouponCodes)) {
                             $invalidCouponCodes[] = $rule;
                         }
                     }
