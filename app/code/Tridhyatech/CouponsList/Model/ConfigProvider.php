@@ -198,8 +198,6 @@ class ConfigProvider
     {
         $validCouponCodes = $allCoupons = $invalidCouponCodes = [];
         $coupons = $this->couponFactory->create()->getCollection()->getData();
-        $customer = $this->customerSession->getCustomer();
-        $websiteId = $this->storeManager->getStore()->getWebsiteId();
         if ($this->cart->getItemsCount() != 0) {
             $allItems = $this->cart->getQuote()->getAllItems();
             foreach ($coupons as $coupon) {
@@ -208,40 +206,10 @@ class ConfigProvider
                 try {
                     $salesRule = $this->ruleRepository->create()->load($coupon['rule_id']);
                     $allCoupons[] = $salesRule->getCouponCode();
-                    if (!$salesRule->getIsActive()) {
-                        $isValidCoupon = false;
-                    }
-                    $today = strtotime(date("Y-m-d"));
-                    $startDay = $salesRule->getFromDate();
-                    $expirationDay = $salesRule->getToDate();
-
-                    $numUses = $coupon['times_used'];
-                    $maxUses = $coupon['usage_limit'];
-                    // Discount code is expired
-                    if ($expirationDay && strtotime($expirationDay) < $today) {
-                        $isValidCoupon = false;
-                    }
-                    if ($startDay && strtotime($startDay) > $today) {
-                        $isValidCoupon = false;
-                    }
-                    if ($maxUses && $numUses >= $maxUses) {
-                        $isValidCoupon = false;
-                    }
-                    if ($websiteId && !in_array($websiteId, $salesRule->getWebsiteIds())) {
-                        $isValidCoupon = false;
-                    }
-                    if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && !$customer->getId()) {
-                        $isValidCoupon = false;
-                    }
-                    if (!in_array(0, $salesRule->getCustomerGroupIds()) && !$customer->getId()) {
-                        $isValidCoupon = false;
-                    }
-                    if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && $customer->getId()) {
-                        $isValidCoupon = false;
-                    }
-                    if (!in_array(0, $salesRule->getCustomerGroupIds()) && $customer->getId() && !in_array($customer->getGroupId(), $salesRule->getCustomerGroupIds())) {
-                        $isValidCoupon = false;
-                    }
+                    $isValidCoupon = $this->checkIsCouponIsActive($salesRule, $isValidCoupon);
+                    $isValidCoupon = $this->checkIsCouponValid($coupon, $salesRule, $isValidCoupon);
+                    $isValidCoupon = $this->isValidForLoggedInCustomer($salesRule, $isValidCoupon);
+                    $isValidCoupon = $this->isValidForNotLoggedInCustomer($salesRule, $isValidCoupon);
                     foreach ($allItems as $item) {
                         $isValidCoupon = $this->checkIsCouponValidForItem($item, $salesRule, $isValidCoupon);
                         $rule = [
@@ -271,6 +239,7 @@ class ConfigProvider
      *
      * @param  Magento\Quote\Model\Quote\Item\AbstractItem $item
      * @param  Magento\SalesRule\Model\RuleFactory $salesRule
+     * @param  boolean $isValidCoupon
      * @return boolean
      */
     public function checkIsCouponValidForItem($item, $salesRule, $isValidCoupon)
@@ -296,6 +265,75 @@ class ConfigProvider
             if ($isContinue) {
                 $isValidCoupon = false;
             }
+        }
+        return $isValidCoupon;
+    }
+
+    /**
+     * Chack Is Coupon Is Valid For Current Logged In Customer
+     *
+     * @param Magento\SalesRule\Model\RuleFactory $salesRule
+     * @param boolean $isValidCoupon
+     * @return boolean
+     */
+    public function isValidForNotLoggedInCustomer($salesRule, $isValidCoupon)
+    {
+        $customer = $this->customerSession->getCustomer();
+        if (count($salesRule->getCustomerGroupIds()) == 1 && in_array(0, $salesRule->getCustomerGroupIds()) && $customer->getId()) {
+            return false;
+        }
+        return $isValidCoupon;
+    }
+
+    /**
+     * Chack Is Coupon Is Valid For Not Logged In Customer
+     *
+     * @param Magento\SalesRule\Model\RuleFactory $salesRule
+     * @param boolean $isValidCoupon
+     * @return boolean
+     */
+    public function isValidForLoggedInCustomer($salesRule, $isValidCoupon)
+    {
+        $customer = $this->customerSession->getCustomer();
+        if (!in_array(0, $salesRule->getCustomerGroupIds()) && ((!$customer->getId()) || ($customer->getId() && !in_array($customer->getGroupId(), $salesRule->getCustomerGroupIds())))) {
+            return false;
+        }
+        return $isValidCoupon;
+    }
+
+    /**
+     * Chack Is Coupon Is Valid For Current Date And Website
+     *
+     * @param CouponFactory $coupon
+     * @param Magento\SalesRule\Model\RuleFactory $salesRule
+     * @param boolean $isValidCoupon
+     * @return boolean
+     */
+    public function checkIsCouponValid($coupon, $salesRule, $isValidCoupon)
+    {
+        $websiteId = $this->storeManager->getStore()->getWebsiteId();
+        $today = strtotime(date("Y-m-d"));
+        $startDay = $salesRule->getFromDate();
+        $expirationDay = $salesRule->getToDate();
+        $numUses = $coupon['times_used'];
+        $maxUses = $coupon['usage_limit'];
+        if (($expirationDay && strtotime($expirationDay) < $today) || ($startDay && strtotime($startDay) > $today) || ($maxUses && $numUses >= $maxUses) || ($websiteId && !in_array($websiteId, $salesRule->getWebsiteIds()))) {
+            return false;
+        }
+        return $isValidCoupon;
+    }
+
+    /**
+     * Check Is Coupon Is Active Or Not
+     *
+     * @param Magento\SalesRule\Model\RuleFactory $salesRule
+     * @param boolean $isValidCoupon
+     * @return boolean
+     */
+    public function checkIsCouponIsActive($salesRule, $isValidCoupon)
+    {
+        if (!$salesRule->getIsActive()) {
+            return false;
         }
         return $isValidCoupon;
     }
