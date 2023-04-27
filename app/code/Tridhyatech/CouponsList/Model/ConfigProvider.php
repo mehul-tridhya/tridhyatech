@@ -24,47 +24,47 @@ class ConfigProvider
     /**
      * @var Magento\SalesRule\Model\CouponFactory
      */
-    protected $_couponFactory;
+    protected $couponFactory;
 
     /**
      * @var Psr\Log\LoggerInterface
      */
-    protected $_logger;
+    protected $logger;
 
     /**
      * @var Magento\SalesRule\Model\RuleFactory
      */
-    protected $_ruleRepository;
+    protected $ruleRepository;
 
     /**
      * @var Magento\Checkout\Model\Cart
      */
-    protected $_cart;
+    protected $cart;
 
     /**
      * @var Magento\SalesRule\Model\Utility
      */
-    protected $_validatorUtility;
+    protected $validatorUtility;
 
     /**
      * @var Magento\SalesRule\Model\Quote\ChildrenValidationLocator
      */
-    protected $_childrenValidationLocator;
+    protected $validationLocator;
 
     /**
      * @var Magento\Customer\Model\Session
      */
-    protected $_customerSession;
+    protected $customerSession;
 
     /**
      * @var Magento\Store\Model\StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
 
     /**
      * @var Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $_scopeConfig;
+    protected $scopeConfig;
 
     public const XML_PATH_COUPON_CODE = 'coupon_code_config/coupon_list/is_active';
     public const XML_PATH_BUTTON_TITLE = 'coupon_code_config/coupon_list/button_title';
@@ -82,7 +82,7 @@ class ConfigProvider
      * @param RuleFactory               $ruleRepository
      * @param Cart                      $cart
      * @param Utility                   $utility
-     * @param ChildrenValidationLocator $childrenValidationLocator
+     * @param ChildrenValidationLocator $validationLocator
      * @param Session                   $customerSession
      * @param StoreManagerInterface     $storeManager
      * @param ScopeConfigInterface      $scopeConfig
@@ -93,20 +93,20 @@ class ConfigProvider
         RuleFactory $ruleRepository,
         Cart $cart,
         Utility $utility,
-        ChildrenValidationLocator $childrenValidationLocator,
+        ChildrenValidationLocator $validationLocator,
         Session $customerSession,
         StoreManagerInterface $storeManager,
         ScopeConfigInterface $scopeConfig,
     ) {
-        $this->_couponFactory = $couponFactory;
-        $this->_logger = $logger;
-        $this->_ruleRepository = $ruleRepository;
-        $this->_cart = $cart;
-        $this->_validatorUtility = $utility;
-        $this->_childrenValidationLocator = $childrenValidationLocator;
-        $this->_customerSession = $customerSession;
-        $this->_storeManager = $storeManager;
-        $this->_scopeConfig = $scopeConfig;
+        $this->couponFactory = $couponFactory;
+        $this->logger = $logger;
+        $this->ruleRepository = $ruleRepository;
+        $this->cart = $cart;
+        $this->validatorUtility = $utility;
+        $this->validationLocator = $validationLocator;
+        $this->customerSession = $customerSession;
+        $this->storeManager = $storeManager;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -116,7 +116,7 @@ class ConfigProvider
      */
     public function getCouponListType()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE_LIST, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_COUPON_CODE_LIST, self::SCOPE_STORE);
     }
 
     /**
@@ -126,7 +126,7 @@ class ConfigProvider
      */
     public function isModuleEnable()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_COUPON_CODE, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_COUPON_CODE, self::SCOPE_STORE);
     }
 
     /**
@@ -146,7 +146,7 @@ class ConfigProvider
      */
     public function getButtonTitle()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_BUTTON_TITLE, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_BUTTON_TITLE, self::SCOPE_STORE);
     }
 
     /**
@@ -156,7 +156,7 @@ class ConfigProvider
      */
     public function getAvailableCouponTitle()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_AVAILABLE_COUPON_TITLE, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_AVAILABLE_COUPON_TITLE, self::SCOPE_STORE);
     }
 
     /**
@@ -166,7 +166,7 @@ class ConfigProvider
      */
     public function getUnavailableCouponTitle()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_UNAVAILABLE_COUPON_TITLE, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_UNAVAILABLE_COUPON_TITLE, self::SCOPE_STORE);
     }
 
     /**
@@ -176,7 +176,7 @@ class ConfigProvider
      */
     public function getAllCouponTitle()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_ALL_COUPON_TITLE, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_ALL_COUPON_TITLE, self::SCOPE_STORE);
     }
 
     /**
@@ -186,7 +186,7 @@ class ConfigProvider
      */
     public function getCartWiseCouponTitle()
     {
-        return $this->_scopeConfig->getValue(self::XML_PATH_CART_WISE_COUPON_TITLE, self::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_CART_WISE_COUPON_TITLE, self::SCOPE_STORE);
     }
 
     /**
@@ -197,16 +197,16 @@ class ConfigProvider
     public function getCouponCodesWithDetails()
     {
         $validCouponCodes = $allCoupons = $invalidCouponCodes = [];
-        $coupons = $this->_couponFactory->create()->getCollection()->getData();
-        $customer = $this->_customerSession->getCustomer();
-        $websiteId = $this->_storeManager->getStore()->getWebsiteId();
-        if ($this->_cart->getItemsCount() != 0) {
-            $allItems = $this->_cart->getQuote()->getAllItems();
+        $coupons = $this->couponFactory->create()->getCollection()->getData();
+        $customer = $this->customerSession->getCustomer();
+        $websiteId = $this->storeManager->getStore()->getWebsiteId();
+        if ($this->cart->getItemsCount() != 0) {
+            $allItems = $this->cart->getQuote()->getAllItems();
             foreach ($coupons as $coupon) {
                 $isValidCoupon = true;
                 $salesRule = null;
                 try {
-                    $salesRule = $this->_ruleRepository->create()->load($coupon['rule_id']);
+                    $salesRule = $this->ruleRepository->create()->load($coupon['rule_id']);
                     $allCoupons[] = $salesRule->getCouponCode();
                     if (!$salesRule->getIsActive()) {
                         $isValidCoupon = false;
@@ -243,7 +243,7 @@ class ConfigProvider
                         $isValidCoupon = false;
                     }
                     foreach ($allItems as $item) {
-                        $isValidCoupon = $this->checkIsCouponValidForItem($item, $salesRule,$isValidCoupon);
+                        $isValidCoupon = $this->checkIsCouponValidForItem($item, $salesRule, $isValidCoupon);
                         $rule = [
                             'coupon_code' => $salesRule->getCouponCode(),
                             'name' => $salesRule->getName(),
@@ -256,7 +256,7 @@ class ConfigProvider
                         }
                     }
                 } catch (Exception $exception) {
-                    $this->_logger->error($exception->getMessage());
+                    $this->logger->error($exception->getMessage());
                 }
             }
         }
@@ -276,12 +276,12 @@ class ConfigProvider
     public function checkIsCouponValidForItem($item, $salesRule, $isValidCoupon)
     {
         $address = $item->getAddress();
-        $isValid = $this->_validatorUtility->canProcessRule($salesRule, $address);
+        $isValid = $this->validatorUtility->canProcessRule($salesRule, $address);
         if (!$isValid) {
             $isValidCoupon = false;
         }
         if (!$salesRule->getActions()->validate($item)) {
-            if (!$this->_childrenValidationLocator->isChildrenValidationRequired($item)) {
+            if (!$this->validationLocator->isChildrenValidationRequired($item)) {
                 $isValidCoupon = false;
             }
             $childItems = $item->getChildren();
