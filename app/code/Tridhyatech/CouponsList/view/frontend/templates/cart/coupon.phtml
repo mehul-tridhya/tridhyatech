@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author    Tridhya Tech Team
+ * @author    Tridhya Tech
  * @copyright Copyright (c) 2023 Tridhya Tech Ltd (https://www.tridhyatech.com)
  * @package   Tridhyatech_CouponsList
  */
@@ -62,7 +62,7 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
             <div id="coupon-list-content" class="coupon-list-modal-content">
                 <div class="coupon-code-content-main">
                     <div>
-                        <?php if ($couponListType == '1') : ?>
+                        <?php if ($couponListType == '1' && count($validCoupons) != 0) : ?>
                             <div class="coupon-code-types-div">
                                 <span class="coupon-code-types"><?php echo $block->escapeHtml(__($availableCouponTitle)) ?></span>
                             </div>
@@ -80,7 +80,7 @@ $hasCouponCode = $block->getCouponCode() !== null && strlen($block->getCouponCod
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <?php if ($couponListType == 1) : ?>
+                    <?php if ($couponListType == 1 && count($invalidCoupons) != 0) : ?>
                         <div>
                             <div class="coupon-code-types-div">
                                 <span class="coupon-code-types"><?php echo $block->escapeHtml(__($unAvailableCouponTitle)) ?></span>
